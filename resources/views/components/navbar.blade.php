@@ -15,5 +15,8 @@
             </ul>
         </div>
 
+        <div>
+            <span class="text-white fs-3">Bem-vindo {{ auth()->user()->Nome }}</span>
+        </div>
     </div>
 </nav>
