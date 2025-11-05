@@ -51,12 +51,12 @@
             <div class="">
 
                 <div>
-                    <label for="form-label">Data Inicial</label>
+                    <label for="form-label">Inicio</label>
                     <input wire:model.live="filterDataInicio" type="datetime-local" class="form-control">
                 </div>
 
                 <div>
-                    <label for="form-label">Data Final</label>
+                    <label for="form-label">Fim</label>
                     <input wire:model.live="filterDataFim" type="datetime-local" class="form-control">
                 </div>
 
@@ -80,6 +80,7 @@
         <table class="table text-center table-bordered table-striped table-hover caption-top">
             <thead class="table-dark">
                 <tr>
+                    <th scope="col">#</th>
                     <th scope="col">Producao</th>
                     <th scope="col">Equipamento</th>
                     <th scope="col">Data Inicio</th>
@@ -93,14 +94,49 @@
             <tbody class="table-info">
                 @foreach ($this->paradas as $parada)
                 <tr>
+                    <td>{{ $parada->Id }}</td>
                     <td>{{ $parada->Producao ? $parada->Producao : 'Sem processo aparente' }}</td>
                     <td>{{ $parada->Equipamento ? $parada->Equipamento : 'Sem equipamento' }}</td>
                     <td>{{ $parada->DataInicio ? $parada->data_inicial->format('d/m/Y H:i') : 'Sem data inicial' }}</td>
                     <td>{{ $parada->DataInicio ? $parada->data_final->format('d/m/Y H:i') : 'Sem data inicial' }}</td>
-                    <td>{{ $parada->Duracao ? $parada->Duracao.'s' : 'Sem duracao' }}</td>
+                    <td>{{ $parada->Duracao ? $parada->Duracao.'min' : 'Sem duracao' }}</td>
                     <td>{{ $parada->EqpGerador ? $parada->EqpGerador : 'Sem Equipamento Gerador' }}</td>
-                    <td></td>
+                    <td>
+                        <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-sm btn-primary"><i class="bi bi-pen"></i></button>
+                            <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#insertSameLine{{ $loop->index }}"><i class="bi bi-copy"></i></button>
+                            <button class="btn btn-sm btn-danger"><i class="bi bi-x-square"></i></button>
+                            <button class="btn btn-sm btn-primary">12</button>
+                        </div>
+                    </td>
                 </tr>
+
+                <div class="modal fade" id="insertSameLine{{ $loop->index }}" data-bs-backdrop="static" wire:ignore.self>
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title fw-bold">Copiar Linha</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                @if(isset($messageCopyLine[$parada->Id]['message']))
+                                <div class="alert alert-{{ $messageCopyLine[$parada->Id]['severity'] }} alert-dismissible fade show" role="alert">
+                                    <strong>{{ $messageCopyLine[$parada->Id]['message'] }}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                @endif
+
+                                <p>Tem certeza que deseja inserir uma linha igual a linha de id: {{ $parada->Id }}</p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                <button type="button" class="btn btn-primary" wire:click="insertSameLine({{ $parada->Id }})">Inserir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
             </tbody>
         </table>

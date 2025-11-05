@@ -25,13 +25,15 @@ class MainTable extends Component
     public $filterDataInicio;
     public $filterDataFim;
 
+    public $messageCopyLine = [];
+
     public function mount()
     {
         $this->filterProcesso = null;
         $this->filterSistema = null;
         $this->filterEquipamento = null;
-        $this->filterDataInicio = null;
-        $this->filterDataFim = null;
+        $this->filterDataInicio = Carbon::today()->subDays(3)->format('Y-m-d\TH:i');
+        $this->filterDataFim = Carbon::today()->format('Y-m-d\TH:i');
     }
 
     public function render()
@@ -80,7 +82,33 @@ class MainTable extends Component
             $query->where('Equipamento',$this->filterEquipamento);
         }
 
+        if ($this->filterDataInicio) {
+            $data = Carbon::parse($this->filterDataInicio)->format('Y-m-d H:i:s');
+            $query->whereRaw("CONVERT(datetime, DataInicio, 120) >= CONVERT(datetime, ?, 120)", [$data]);
+        }
+
+        if ($this->filterDataFim) {
+            $data = Carbon::parse($this->filterDataFim)->format('Y-m-d H:i:s');
+            $query->whereRaw("CONVERT(datetime, DataFim, 120) <= CONVERT(datetime, ?, 120)", [$data]);
+        }
+
         return $query->orderBy('DataInicio','desc')->paginate(8,'*','paradas');
+    }
+
+    public function insertSameLine($linhaId)
+    {
+        $parada = $this->getParada($linhaId);
+
+        if(!$parada){
+            return $this->messageCopyLine[$linhaId] = ['message'=>'Erro ao tentar encontrar linha: '.$linhaId, 'severity'=>'danger'];
+        }
+
+        return redirect()->route('copyLine.index',['lineId'=>$parada->Id]);
+    }
+
+    public function getParada($id)
+    {
+        return Parada::find($id);
     }
 
     public function refreshFilters()

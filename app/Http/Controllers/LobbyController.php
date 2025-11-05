@@ -10,4 +10,9 @@ class LobbyController extends Controller
     {
         return view('lobby');
     }
+
+    public function viewCopyLine($lineId)
+    {
+        return view('copyLine',['lineId'=>$lineId]);
+    }
 }
