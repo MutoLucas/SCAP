@@ -26,6 +26,9 @@ class MainTable extends Component
     public $filterDataFim;
 
     public $messageCopyLine = [];
+    public $messageDeleteLine = [];
+
+    public $selectedToDelete;
 
     public function mount()
     {
@@ -34,6 +37,8 @@ class MainTable extends Component
         $this->filterEquipamento = null;
         $this->filterDataInicio = Carbon::today()->subDays(3)->format('Y-m-d\TH:i');
         $this->filterDataFim = Carbon::today()->format('Y-m-d\TH:i');
+
+        $this->selectedToDelete = null;
     }
 
     public function render()
@@ -109,6 +114,24 @@ class MainTable extends Component
     public function getParada($id)
     {
         return Parada::find($id);
+    }
+
+    public function selectToDelete($id)
+    {
+        $this->selectedToDelete = $this->getParada($id);
+    }
+
+    public function deleteParada($id)
+    {
+        $parada = $this->getParada($id);
+
+        if(!$parada){
+            return $this->messageDeleteLine = ['message'=>'Erro ao tentar encontra linha: '.$id,'severity'=>'danger','icon'=>'bi bi-x-circle'];
+        }
+
+        $parada->delete();
+        $this->reset('selectedToDelete');
+        return $this->messageDeleteLine = ['message'=>'Linha: '.$id.' deletada com sucesso','severity'=>'success','icon'=>'bi bi-check2-circle'];
     }
 
     public function refreshFilters()
