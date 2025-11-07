@@ -15,3 +15,4 @@ Route::post('/logout',[AuthController::class,'logout'])->name('login.logout');
 Route::get('/lobby', [LobbyController::class,'lobbyIndex'])->name('lobby')->middleware(VerifyAuth::class);
 
 Route::get('/copyline/{lineId}',[LobbyController::class,'viewCopyLine'])->name('copyLine.index')->middleware(VerifyAuth::class);
+Route::get('editline/{lineId}',[LobbyController::class,'viewEditLine'])->name('editLine.index')->middleware(VerifyAuth::class);

@@ -140,6 +140,17 @@ class MainTable extends Component
         return $this->messageDeleteLine = ['message'=>'Linha: '.$id.' deletada com sucesso','severity'=>'success','icon'=>'bi bi-check2-circle'];
     }
 
+    public function editLine($lineId)
+    {
+        $parada = $this->getParada($lineId);
+
+        if(!$parada){
+            return session()->flash('errorEditLine','Erro ao tentar encontrar linha: '.$lineId);
+        }
+
+        return redirect()->route('editLine.index',['lineId'=>$lineId]);
+    }
+
     public function refreshFilters()
     {
         $this->reset();

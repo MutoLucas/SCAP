@@ -15,4 +15,9 @@ class LobbyController extends Controller
     {
         return view('copyLine',['lineId'=>$lineId]);
     }
+
+    public function viewEditLine($lineId)
+    {
+        return view('edit-line',['lineId'=>$lineId]);
+    }
 }

@@ -76,6 +76,26 @@
             </div>
         @endif
 
+        @if (Session::has('successEditLine'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>
+                    <i class="bi bi-check-circle"></i>
+                    {{ Session('successEditLine') }}
+                </strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if (Session::has('errorEditLine'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>
+                    <i class="bi bi-check-circle"></i>
+                    {{ Session('errorEditLine') }}
+                </strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <div class="d-flex justify-content-between p-2 text-success">
             <div>
                 <i class="bi bi-clock"></i> Tabela de Paradas
@@ -119,7 +139,7 @@
                         <td>{{ $parada->EqpGerador ? $parada->EqpGerador : 'Sem Equipamento Gerador' }}</td>
                         <td>
                             <div class="d-flex justify-content-center gap-2">
-                                <button class="btn btn-sm btn-primary"><i class="bi bi-pen"></i></button>
+                                <button class="btn btn-sm btn-primary" wire:click="editLine({{ $parada->Id }})"><i class="bi bi-pen"></i></button>
 
                                 <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                     data-bs-target="#insertSameLine{{ $loop->index }}"><i
