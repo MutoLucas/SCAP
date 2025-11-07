@@ -24,6 +24,7 @@ class MainTable extends Component
     public $filterEquipamento;
     public $filterDataInicio;
     public $filterDataFim;
+    public $filterId;
 
     public $messageCopyLine = [];
     public $messageDeleteLine = [];
@@ -37,6 +38,7 @@ class MainTable extends Component
         $this->filterEquipamento = null;
         $this->filterDataInicio = Carbon::today()->subDays(3)->format('Y-m-d\TH:i');
         $this->filterDataFim = Carbon::today()->format('Y-m-d\TH:i');
+        $this->filterId = null;
 
         $this->selectedToDelete = null;
     }
@@ -95,6 +97,10 @@ class MainTable extends Component
         if ($this->filterDataFim) {
             $data = Carbon::parse($this->filterDataFim)->format('Y-m-d H:i:s');
             $query->whereRaw("CONVERT(datetime, DataFim, 120) <= CONVERT(datetime, ?, 120)", [$data]);
+        }
+
+        if ($this->filterId){
+            $query->where('Id',$this->filterId);
         }
 
         return $query->orderBy('DataInicio','desc')->paginate(8,'*','paradas');

@@ -65,12 +65,27 @@
     </div>
 
     <div class="container shadow-lg mt-4 p-3">
+
+        @if (Session::has('successCreateLine'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>
+                    <i class="bi bi-check-circle"></i>
+                    {{ Session('successCreateLine') }}
+                </strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <div class="d-flex justify-content-between p-2 text-success">
             <div>
                 <i class="bi bi-clock"></i> Tabela de Paradas
             </div>
 
-            <div>
+            <div class="d-flex justify-content-between gap-2">
+                <div class="input-group">
+                    <input wire:model.lazy="filterId" type="text" class="form-control form-control-sm" placeholder="Ex: 2142578 (Id)">
+                </div>
+
                 <button class="btn btn-outline-warning" wire:click="refreshFilters">
                     <i class="bi bi-arrow-clockwise"></i>
                 </button>
