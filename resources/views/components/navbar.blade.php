@@ -2,8 +2,7 @@
     <div class="container-fluid">
         <h1 class="fw-bold text-white">SCAP</h1>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -15,8 +14,31 @@
             </ul>
         </div>
 
-        <div>
-            <span class="text-white fs-3">Bem-vindo {{ auth()->user()->Nome }}</span>
+        <!-- Dropdown de Usuário -->
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <span>Olá, {{ auth()->user()->Nome }}</span>
+            </button>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
+                <li>
+                    <h6 class="dropdown-header">Conta</h6>
+                </li>
+                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="#">Configurações</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <form method="POST" action="{{ route('login.logout') }}">
+                        @csrf
+                        <button type="submit" class="dropdown-item text-danger">
+                            <i class="bi bi-box-arrow-right me-2"></i> Sair
+                        </button>
+                    </form>
+                </li>
+            </ul>
         </div>
+
     </div>
 </nav>
