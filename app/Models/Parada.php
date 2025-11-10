@@ -35,6 +35,8 @@ class Parada extends Model
         'NumeroParada'
     ];
 
+
+
     public function getDataInicialAttribute()
     {
         return Carbon::parse($this->DataInicio);

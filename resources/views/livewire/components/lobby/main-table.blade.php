@@ -14,7 +14,7 @@
                     <select wire:model.lazy="filterProcesso" class="form-select form-select-sm">
                         <option value="">Selecione...</option>
                         @foreach ($this->processos as $processo)
-                            <option value="{{ $processo->Processo }}">{{ $processo->Processo }}</option>
+                        <option value="{{ $processo->Processo }}">{{ $processo->Processo }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -24,7 +24,7 @@
                     <select wire:model.lazy="filterSistema" class="form-select form-select-sm">
                         <option value="">Selecione...</option>
                         @foreach ($this->sistemas as $sistema)
-                            <option value="{{ $sistema->Sistema }}">{{ $sistema->Sistema }}</option>
+                        <option value="{{ $sistema->Sistema }}">{{ $sistema->Sistema }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -34,7 +34,7 @@
                     <select wire:model.lazy="filterEquipamento" class="form-select form-select-sm">
                         <option value="">Selecione...</option>
                         @foreach ($this->equipamentos as $equipamento)
-                            <option value="{{ $equipamento->Equipamento }}">{{ $equipamento->Equipamento }}</option>
+                        <option value="{{ $equipamento->Equipamento }}">{{ $equipamento->Equipamento }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -66,34 +66,44 @@
 
     <div class="container shadow-lg mt-4 p-3">
 
+        @if (Session::has('successDivideLine'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>
+                <i class="bi bi-check-circle"></i>
+                {{ Session('successDivideLine') }}
+            </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
         @if (Session::has('successCreateLine'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>
-                    <i class="bi bi-check-circle"></i>
-                    {{ Session('successCreateLine') }}
-                </strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>
+                <i class="bi bi-check-circle"></i>
+                {{ Session('successCreateLine') }}
+            </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         @endif
 
         @if (Session::has('successEditLine'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>
-                    <i class="bi bi-check-circle"></i>
-                    {{ Session('successEditLine') }}
-                </strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>
+                <i class="bi bi-check-circle"></i>
+                {{ Session('successEditLine') }}
+            </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         @endif
 
         @if (Session::has('errorEditLine'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>
-                    <i class="bi bi-check-circle"></i>
-                    {{ Session('errorEditLine') }}
-                </strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>
+                <i class="bi bi-check-circle"></i>
+                {{ Session('errorEditLine') }}
+            </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         @endif
 
         <div class="d-flex justify-content-between p-2 text-success">
@@ -127,66 +137,123 @@
 
             <tbody class="table-info">
                 @foreach ($this->paradas as $parada)
-                    <tr>
-                        <td>{{ $parada->Id }}</td>
-                        <td>{{ $parada->Producao ? $parada->Producao : 'Sem processo aparente' }}</td>
-                        <td>{{ $parada->Equipamento ? $parada->Equipamento : 'Sem equipamento' }}</td>
-                        <td>{{ $parada->DataInicio ? $parada->data_inicial->format('d/m/Y H:i') : 'Sem data inicial' }}
-                        </td>
-                        <td>{{ $parada->DataInicio ? $parada->data_final->format('d/m/Y H:i') : 'Sem data inicial' }}
-                        </td>
-                        <td>{{ $parada->Duracao ? $parada->Duracao . 'min' : 'Sem duracao' }}</td>
-                        <td>{{ $parada->EqpGerador ? $parada->EqpGerador : 'Sem Equipamento Gerador' }}</td>
-                        <td>
-                            <div class="d-flex justify-content-center gap-2">
-                                <button class="btn btn-sm btn-primary" wire:click="editLine({{ $parada->Id }})"><i class="bi bi-pen"></i></button>
+                <tr>
+                    <td>{{ $parada->Id }}</td>
+                    <td>{{ $parada->Producao ? $parada->Producao : 'Sem processo aparente' }}</td>
+                    <td>{{ $parada->Equipamento ? $parada->Equipamento : 'Sem equipamento' }}</td>
+                    <td>{{ $parada->DataInicio ? $parada->data_inicial->format('d/m/Y H:i') : 'Sem data inicial' }}
+                    </td>
+                    <td>{{ $parada->DataInicio ? $parada->data_final->format('d/m/Y H:i') : 'Sem data inicial' }}
+                    </td>
+                    <td>{{ $parada->Duracao ? $parada->Duracao . 'min' : 'Sem duracao' }}</td>
+                    <td>{{ $parada->EqpGerador ? $parada->EqpGerador : 'Sem Equipamento Gerador' }}</td>
+                    <td>
+                        <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-sm btn-primary" wire:click="editLine({{ $parada->Id }})"><i class="bi bi-pen"></i></button>
 
-                                <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                    data-bs-target="#insertSameLine{{ $loop->index }}"><i
-                                        class="bi bi-copy"></i></button>
+                            <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#insertSameLine{{ $loop->index }}"><i class="bi bi-copy"></i></button>
 
-                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#deleteLine" wire:click="selectToDelete({{ $parada->Id }})"><i
-                                        class="bi bi-x-square"></i></button>
+                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteLine" wire:click="selectToDelete({{ $parada->Id }})"><i class="bi bi-x-square"></i></button>
 
-                                <button class="btn btn-sm btn-primary">12</button>
+                            <button class="btn btn-sm btn-success" wire:click="selectToDivide({{ $parada->Id }})" data-bs-toggle="modal" data-bs-target="#divideLine">
+                                <i class="bi bi-hr"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+                <div class="modal fade" id="insertSameLine{{ $loop->index }}" data-bs-backdrop="static" wire:ignore.self>
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title fw-bold">Copiar Linha</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
-                        </td>
-                    </tr>
 
-                    <div class="modal fade" id="insertSameLine{{ $loop->index }}" data-bs-backdrop="static"
-                        wire:ignore.self>
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title fw-bold">Copiar Linha</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            <div class="modal-body">
+                                @if (isset($messageCopyLine[$parada->Id]['message']))
+                                <div class="alert alert-{{ $messageCopyLine[$parada->Id]['severity'] }} alert-dismissible fade show" role="alert">
+                                    <strong>{{ $messageCopyLine[$parada->Id]['message'] }}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
+                                @endif
 
-                                <div class="modal-body">
-                                    @if (isset($messageCopyLine[$parada->Id]['message']))
-                                        <div class="alert alert-{{ $messageCopyLine[$parada->Id]['severity'] }} alert-dismissible fade show"
-                                            role="alert">
-                                            <strong>{{ $messageCopyLine[$parada->Id]['message'] }}</strong>
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                aria-label="Close"></button>
-                                        </div>
-                                    @endif
+                                <p>Tem certeza que deseja inserir uma linha igual a linha de id:
+                                    {{ $parada->Id }}</p>
+                            </div>
 
-                                    <p>Tem certeza que deseja inserir uma linha igual a linha de id:
-                                        {{ $parada->Id }}</p>
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Fechar</button>
-                                    <button type="button" class="btn btn-primary"
-                                        wire:click="insertSameLine({{ $parada->Id }})">Inserir</button>
-                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                <button type="button" class="btn btn-primary" wire:click="insertSameLine({{ $parada->Id }})">Inserir</button>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="modal fade" id="divideLine" data-bs-backdrop="static" wire:ignore.self>
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title fw-bold">Dividir Linha: {{ $selectedToDivide->Id ?? '' }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                @if (isset($messageDivideLine[$parada->Id]['message']))
+                                <div class="alert alert-{{ $messageDivideLine[$parada->Id]['severity'] }} alert-dismissible fade show" role="alert">
+                                    <strong>
+                                        @if (isset($messageDivideLine[$parada->Id]['icon']))
+                                        <i class="{{ $messageDivideLine[$parada->Id]['icon'] }}"></i>
+                                        @endif
+                                        {{ $messageDivideLine[$parada->Id]['message'] }}
+                                    </strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                @endif
+
+                                @if (Session::has('successDivideLine'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>
+                                        <i class="bi bi-check-circle"></i>
+                                        {{ Session('successDivideLine') }}
+                                    </strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                @endif
+
+                                @if ($selectedToDivide)
+
+                                <div class="w-full mb-3">
+                                    <label class="form-label">Data Inicio</label>
+                                    <input type="datetime-local" value="{{ \Carbon\Carbon::parse($selectedToDivide->DataInicio)->format('Y-m-d\TH:i') }}" class="form-control" disabled>
+                                </div>
+
+                                <div class="w-full mb-3">
+                                    <label class="form-label">Data Fim</label>
+                                    <input type="datetime-local" value="{{ \Carbon\Carbon::parse($selectedToDivide->DataFim)->format('Y-m-d\TH:i') }}" class="form-control" disabled>
+                                </div>
+
+                                <div class="w-full mb-3">
+                                    <label class="form-label">Data Inicio/Fim Nova</label>
+                                    <input type="datetime-local" class="form-control" wire:model="newDateInicioFim">
+                                    @error('newDateInicioFim')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                @endif
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+
+                                <button class="btn btn-success" type="button" wire:click="divideLine({{ $parada->Id }})"><i class="bi bi-hr"></i> Dividir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
+
 
                 <div class="modal fade" id="deleteLine" data-bs-backdrop="static" wire:ignore.self>
                     <div class="modal-dialog">
@@ -198,32 +265,28 @@
 
                             <div class="modal-body">
                                 @if (isset($messageDeleteLine['message']))
-                                    <div class="alert alert-{{ $messageDeleteLine['severity'] }} alert-dismissible fade show"
-                                        role="alert">
-                                        <strong>
-                                            @if (isset($messageDeleteLine['icon']))
-                                                <i class="{{ $messageDeleteLine['icon'] }}"></i>
-                                            @endif
-                                            {{ $messageDeleteLine['message'] }}
-                                        </strong>
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                            aria-label="Close"></button>
-                                    </div>
+                                <div class="alert alert-{{ $messageDeleteLine['severity'] }} alert-dismissible fade show" role="alert">
+                                    <strong>
+                                        @if (isset($messageDeleteLine['icon']))
+                                        <i class="{{ $messageDeleteLine['icon'] }}"></i>
+                                        @endif
+                                        {{ $messageDeleteLine['message'] }}
+                                    </strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
                                 @endif
                                 @if ($selectedToDelete)
-                                    <p>Tem certeza que deseja deletar a linha de id:
-                                        {{ $selectedToDelete->Id ?? null }}
-                                    </p>
+                                <p>Tem certeza que deseja deletar a linha de id:
+                                    {{ $selectedToDelete->Id ?? null }}
+                                </p>
                                 @endif
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Fechar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
 
                                 @if ($selectedToDelete)
-                                    <button type="button" class="btn btn-danger"
-                                        wire:click="deleteParada({{ $selectedToDelete->Id }})">Deletar</button>
+                                <button type="button" class="btn btn-danger" wire:click="deleteParada({{ $selectedToDelete->Id }})">Deletar</button>
                                 @endif
                             </div>
                         </div>

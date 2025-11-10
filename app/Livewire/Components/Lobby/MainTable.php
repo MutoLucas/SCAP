@@ -28,8 +28,12 @@ class MainTable extends Component
 
     public $messageCopyLine = [];
     public $messageDeleteLine = [];
+    public $messageDivideLine = [];
 
     public $selectedToDelete;
+    public $selectedToDivide;
+
+    public $newDateInicioFim;
 
     public function mount()
     {
@@ -125,6 +129,53 @@ class MainTable extends Component
     public function selectToDelete($id)
     {
         $this->selectedToDelete = $this->getParada($id);
+    }
+
+    public function selectToDivide($id)
+    {
+        $this->selectedToDivide = $this->getParada($id);
+    }
+
+    public function divideLine($id)
+    {
+        $this->validate([
+            'newDateInicioFim'=>'required'
+        ],[
+            'newDateInicioFim.required'=>'Necessario informar a Data e Hora'
+        ]);
+
+        if($this->selectedToDivide->DataInicio && $this->selectedToDivide->DataFim){
+            $dataInicioAtual = Carbon::parse($this->selectedToDivide->DataInicio);
+            $dataFimAtual = Carbon::parse($this->selectedToDivide->DataFim);
+            $novaData = Carbon::parse($this->newDateInicioFim);
+
+            if(!$novaData->between($dataInicioAtual, $dataFimAtual)){
+                return $this->messageDivideLine[$id] = [
+                    'message'=>'A data deve estar entre as datas atuais da parada',
+                    'severity'=>'danger',
+                    'icon'=>'bi bi-x-circle'
+                ];
+            }
+
+            $novaParada = $this->selectedToDivide->replicate(['NumeroParada','Duracao']);
+
+            $this->selectedToDivide->DataFim = DB::raw("CONVERT(datetime, '{$novaData}', 120)");
+            $novaParada->DataInicio = DB::raw("CONVERT(datetime, '{$novaData}', 120)");
+            $novaParada->DataFim = DB::raw("CONVERT(datetime, '{$dataFimAtual}', 120)");
+
+            $this->selectedToDivide->save();
+            $novaParada->save();
+            $this->selectedToDivide = null;
+            $this->newDateInicioFim = null;
+
+            $this->messageDivideLine[$id] = [
+                'message'=>'Parada dividida com sucesso',
+                'severity'=>'success',
+                'icon'=>'bi bi-check-circle'
+            ];
+
+            return session()->flash('successDivideLine','Nova Parada: '.$novaParada->Id.' criada apartir de uma divisao');
+        }
     }
 
     public function deleteParada($id)
