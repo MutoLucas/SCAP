@@ -30,7 +30,7 @@
 
             <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
                 <li>
-                    <h6 class="dropdown-header">Conta</h6>
+                    <h6 class="dropdown-header">Conta - {{ auth()->user()->role['role'] }}</h6>
                 </li>
                 <li><a class="dropdown-item" href="#">Perfil</a></li>
                 <li><a class="dropdown-item" href="#">Configurações</a></li>
