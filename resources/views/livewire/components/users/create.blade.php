@@ -1,7 +1,7 @@
 <div class="container w-25">
 
     <form class="container" wire:submit="storeLogin">
-        <div class="d-flex justify-content-center border border-secondary bg bg-info-subtle p-3 rounded-top">
+        <div class="d-flex justify-content-center border border-secondary bg bg-dark text-light p-3 rounded-top">
             <h3 class="fw-bold fs-4">Formulário de Criação</h3>
         </div>
 

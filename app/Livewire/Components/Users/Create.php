@@ -59,10 +59,12 @@ class Create extends Component
             'Senha'=>$password
         ]);
 
-        return $this->message = [
+        $this->message = [
             'message'=>'Login: '.$newLogin->Login.' criado com sucesso',
             'severity'=>'alert-success',
             'icon'=>'bi bi-check-circle'
         ];
+
+        return $this->dispatch('login-created');
     }
 }

@@ -20,6 +20,16 @@ class Login extends Authenticatable
         'NivelAcesso'
     ];
 
+    public function getRoleAttribute()
+    {
+        return match ($this->NivelAcesso){
+            'Administrador'=>['role'=>'Administrador','color'=>'primary'],
+            'Operador'=>['role'=>'Operador','color'=>'success'],
+            'Manutentor'=>['role'=>'Manutentor','color'=>'warning'],
+            default=>['role'=>ucfirst($this->NivelAcesso),'color'=>'danger']
+        };
+    }
+
     public function getAuthPassword()
     {
         return $this->Senha;

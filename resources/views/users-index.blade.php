@@ -9,6 +9,8 @@
     </div>
 
     <div class="container d-flex gap-3 mt-3">
-        <livewire:components.users.create>
+        <livewire:components.users.create/>
+
+        <livewire:components.users.user-table/>
     </div>
 @endsection
