@@ -44,7 +44,7 @@ class MainTable extends Component
         $this->filterSistema = null;
         $this->filterEquipamento = null;
         $this->filterDataInicio = Carbon::today()->subDays(3)->format('Y-m-d\TH:i');
-        $this->filterDataFim = Carbon::today()->format('Y-m-d\TH:i');
+        $this->filterDataFim = Carbon::today()->setTime(23,59)->format('Y-m-d\TH:i');
         $this->filterId = null;
 
         $this->selectedToDelete = null;
