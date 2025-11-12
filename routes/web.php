@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LobbyController;
+use App\Http\Controllers\UserController;
 
 use App\Http\Middleware\VerifyAuth;
 
@@ -16,3 +17,7 @@ Route::get('/', [LobbyController::class,'lobbyIndex'])->name('lobby');
 
 Route::get('/copyline/{lineId}',[LobbyController::class,'viewCopyLine'])->name('copyLine.index')->middleware(VerifyAuth::class);
 Route::get('editline/{lineId}',[LobbyController::class,'viewEditLine'])->name('editLine.index');
+
+Route::prefix('/users')->middleware(VerifyAuth::class)->group(function (){
+    Route::get('/lobby',[UserController::class,'showIndex'])->name('users.index');
+});

@@ -11,6 +11,12 @@
                 <li class="nav-item">
                     <a class="nav-link active text-white" aria-current="page" href="{{ route('lobby') }}">Home</a>
                 </li>
+
+                @if(auth()->check() && auth()->user()->NivelAcesso == 'Administrador')
+                <li class="nav-item">
+                    <a class="nav-link active text-white" aria-current="page" href="{{ route('users.index') }}">Usuarios</a>
+                </li>
+                @endif
             </ul>
         </div>
 
