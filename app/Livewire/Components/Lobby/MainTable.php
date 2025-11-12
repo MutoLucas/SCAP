@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
 
+use App\Exports\ParadasExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Models\Processo;
 use App\Models\Sistema;
 use App\Models\Equipamento;
@@ -200,6 +203,39 @@ class MainTable extends Component
         }
 
         return redirect()->route('editLine.index',['lineId'=>$lineId]);
+    }
+
+    public function exportToExcel()
+    {
+        $query = Parada::query();
+
+        if($this->filterProcesso){
+            $query->where('Producao',$this->filterProcesso);
+        }
+
+        if($this->filterSistema){
+            $query->where('Sistema',$this->filterSistema);
+        }
+
+        if($this->filterEquipamento){
+            $query->where('Equipamento',$this->filterEquipamento);
+        }
+
+        if ($this->filterDataInicio) {
+            $data = Carbon::parse($this->filterDataInicio)->format('Y-m-d H:i:s');
+            $query->whereRaw("CONVERT(datetime, DataInicio, 120) >= CONVERT(datetime, ?, 120)", [$data]);
+        }
+
+        if ($this->filterDataFim) {
+            $data = Carbon::parse($this->filterDataFim)->format('Y-m-d H:i:s');
+            $query->whereRaw("CONVERT(datetime, DataFim, 120) <= CONVERT(datetime, ?, 120)", [$data]);
+        }
+
+        if ($this->filterId){
+            $query->where('Id',$this->filterId);
+        }
+
+        return Excel::download(new ParadasExport($query->orderBy('DataInicio','desc')->get()->toArray()),'paradas_'.now()->format('d-m-Y').'.xlsx');
     }
 
     public function refreshFilters()

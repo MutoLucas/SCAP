@@ -119,6 +119,10 @@
                 <button class="btn btn-outline-warning" wire:click="refreshFilters">
                     <i class="bi bi-arrow-clockwise"></i>
                 </button>
+
+                <button class="btn btn-outline-success" wire:click="exportToExcel">
+                    <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+                </button>
             </div>
         </div>
         <table class="table text-center table-bordered table-striped table-hover caption-top">
