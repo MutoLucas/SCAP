@@ -12,82 +12,82 @@
 
                 <div class="p-1">
                     <label class="form-label">Tag Gerador</label>
-                    <select class="form-select form-select-sm" wire:model="tagGerador">
+                    <select class="form-select form-select-sm" wire:model="tagGerador" @disabled(!auth()->check())>
                         <option value="">Selecione...</option>
                         @foreach ($this->equipamentos as $equipamento)
-                            <option value="{{ $equipamento->Equipamento }}">{{ $equipamento->Equipamento }}</option>
+                        <option value="{{ $equipamento->Equipamento }}">{{ $equipamento->Equipamento }}</option>
                         @endforeach
                     </select>
                     @error('tagGerador')
-                        <small class="text-danger">{{ $message }}</small>
+                    <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
                 <div class="p-1">
                     <label class="form-label">Tipo de Código</label>
-                    <select wire:model.lazy="tipCod" class="form-select form-select-sm">
+                    <select wire:model.lazy="tipCod" class="form-select form-select-sm" @disabled(!auth()->check())>
                         <option value="">Selecione...</option>
                         @foreach ($this->tipoCodigos as $tipCod)
-                            <option value="{{ $tipCod->{"Tipo de Código"} }}">{{ $tipCod->{"Tipo de Código"} }}</option>
+                        <option value="{{ $tipCod->{"Tipo de Código"} }}">{{ $tipCod->{"Tipo de Código"} }}</option>
                         @endforeach
                     </select>
                     @error('tipCod')
-                        <small class="text-danger">{{ $message }}</small>
+                    <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
                 <div class="p-1">
                     <label class="form-label">Grupo de Código</label>
-                    <select wire:model.lazy="grupCod" class="form-select form-select-sm">
+                    <select wire:model.lazy="grupCod" class="form-select form-select-sm" @disabled(!auth()->check())>
                         <option value="">Selecione...</option>
                         @foreach ($this->grupoCodigos as $grupCod)
-                            <option value="{{ $grupCod->{"Grupo de Código"} }}">{{ $grupCod->{"Grupo de Código"} }}
-                            </option>
+                        <option value="{{ $grupCod->{"Grupo de Código"} }}">{{ $grupCod->{"Grupo de Código"} }}
+                        </option>
                         @endforeach
                     </select>
                     @error('grupCod')
-                        <small class="text-danger">{{ $message }}</small>
+                    <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
                 <div class="p-1">
                     <label class="form-label">Código de Falha</label>
-                    <select wire:model.lazy="falCod" class="form-select form-select-sm">
+                    <select wire:model.lazy="falCod" class="form-select form-select-sm" @disabled(!auth()->check())>
                         <option value="">Selecione...</option>
                         @foreach ($this->codigoFalhas as $falCod)
-                            <option value="{{ $falCod->{"Código das Falhas"} }}">{{ $falCod->{"Código das Falhas"} }}
-                            </option>
+                        <option value="{{ $falCod->{"Código das Falhas"} }}">{{ $falCod->{"Código das Falhas"} }}
+                        </option>
                         @endforeach
                     </select>
                     @error('falCod')
-                        <small class="text-danger">{{ $message }}</small>
+                    <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
                 <div class="p-1">
                     <label class="form-label">Causa Aparente</label>
-                    <select wire:model.lazy="causaAparente" class="form-select form-select-sm">
+                    <select wire:model.lazy="causaAparente" class="form-select form-select-sm" @disabled(!auth()->check())>
                         <option value="">Selecione...</option>
                         @foreach ($this->causasAparentes as $causaAparente)
-                            <option value="{{ $causaAparente->CausaAparente }}">{{ $causaAparente->CausaAparente }}
-                            </option>
+                        <option value="{{ $causaAparente->CausaAparente }}">{{ $causaAparente->CausaAparente }}
+                        </option>
                         @endforeach
                     </select>
                     @error('causaAparente')
-                        <small class="text-danger">{{ $message }}</small>
+                    <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
                 <div class="p-1">
                     <label class="form-label">Componente</label>
-                    <select wire:model.lazy="componente" class="form-select form-select-sm">
+                    <select wire:model.lazy="componente" class="form-select form-select-sm" @disabled(!auth()->check())>
                         <option value="">Selecione...</option>
                         @foreach ($this->componentes as $componente)
-                            <option value="{{ $componente->Componente }}">{{ $componente->Componente }}</option>
+                        <option value="{{ $componente->Componente }}">{{ $componente->Componente }}</option>
                         @endforeach
                     </select>
                     @error('componente')
-                        <small class="text-danger">{{ $message }}</small>
+                    <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
@@ -104,83 +104,83 @@
 
                 <div class="p-1">
                     <label class="form-label">Processo</label>
-                    <select class="form-select form-select-sm" wire:model.lazy="processo">
+                    <select class="form-select form-select-sm" wire:model.lazy="processo" @disabled(!auth()->check())>
                         <option value="">Selecione...</option>
                         @foreach ($this->processos as $processo)
-                            <option value="{{ $processo->Processo }}">{{ $processo->Processo }}</option>
+                        <option value="{{ $processo->Processo }}">{{ $processo->Processo }}</option>
                         @endforeach
                     </select>
                     @error('processo')
-                        <small class="text-danger">{{ $message }}</small>
+                    <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
                 <div class="p-1">
                     <label class="form-label">Sistema</label>
-                    <select class="form-select form-select-sm" wire:model.lazy="sistema">
+                    <select class="form-select form-select-sm" wire:model.lazy="sistema" @disabled(!auth()->check())>
                         <option value="">Selecione...</option>
                         @foreach ($this->sistemas as $sistema)
-                            <option value="{{ $sistema->Sistema }}">{{ $sistema->Sistema }}</option>
+                        <option value="{{ $sistema->Sistema }}">{{ $sistema->Sistema }}</option>
                         @endforeach
                     </select>
                     @error('sistema')
-                        <small class="text-danger">{{ $message }}</small>
+                    <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
                 <div class="p-1">
                     <label class="form-label">Equipamento</label>
-                    <select class="form-select form-select-sm" wire:model.lazy="equipamento">
+                    <select class="form-select form-select-sm" wire:model.lazy="equipamento" @disabled(!auth()->check())>
                         <option value="">Selecione...</option>
                         @foreach ($this->equipamentos as $equipamento)
-                            <option value="{{ $equipamento->Equipamento }}">{{ $equipamento->Equipamento }}</option>
+                        <option value="{{ $equipamento->Equipamento }}">{{ $equipamento->Equipamento }}</option>
                         @endforeach
                     </select>
                     @error('equipamento')
-                        <small class="text-danger">{{ $message }}</small>
+                    <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
                 <div class="p-1">
                     <label class="form-label">Inicio</label>
-                    <input type="datetime-local" class="form-control" wire:model.lazy="inicio">
+                    <input type="datetime-local" class="form-control" wire:model.lazy="inicio" @disabled(!auth()->check())>
                     @error('Inicio')
-                        <small class="text-danger">{{ $message }}</small>
+                    <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
                 <div class="p-1">
                     <label class="form-label">Fim</label>
-                    <input type="datetime-local" class="form-control" wire:model.lazy="fim">
+                    <input type="datetime-local" class="form-control" wire:model.lazy="fim" @disabled(!auth()->check())>
                     @error('fim')
-                        <small class="text-danger">{{ $message }}</small>
+                    <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
                 <div class="p-1">
                     {{ $this->turno }}
                     <label class="form-label">Turno</label>
-                    <select class="form-select form-select-sm" wire:model.lazy="turno">
+                    <select class="form-select form-select-sm" wire:model.lazy="turno" @disabled(!auth()->check())>
                         <option value="">Selecione...</option>
                         @foreach ($this->turnos as $turno)
-                            <option value="{{ $turno->Turno }}">{{ $turno->Turno }} - {{ $turno->Horario }}</option>
+                        <option value="{{ $turno->Turno }}">{{ $turno->Turno }} - {{ $turno->Horario }}</option>
                         @endforeach
                     </select>
                     @error('turno')
-                        <small class="text-danger">{{ $message }}</small>
+                    <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
                 <div class="p-1">
                     <label class="form-label">Operador</label>
-                    <select class="form-select form-select-sm" wire:model.lazy="operador">
+                    <select class="form-select form-select-sm" wire:model.lazy="operador" @disabled(!auth()->check())>
                         <option value="">Selecione...</option>
                         @foreach ($this->operadores as $operador)
-                            <option value="{{ $operador->Login }}">{{ $operador->Nome }}</option>
+                        <option value="{{ $operador->Login }}">{{ $operador->Nome }}</option>
                         @endforeach
                     </select>
                     @error('operador')
-                        <small class="text-danger">{{ $message }}</small>
+                    <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
@@ -202,16 +202,17 @@
 
             <div class="">
 
-                <textarea wire:model="observacao" cols="30" rows="6" class="form-control"></textarea>
+                <textarea wire:model="observacao" cols="30" rows="6" class="form-control" @disabled(!auth()->check())></textarea>
 
             </div>
         </div>
 
     </div>
 
+    @if(auth()->check())
     <div class="w-full mt-2 d-flex justify-content-end">
-        <button class="btn btn-outline-success" type="button" wire:click="saveAlters"><i
-                class="bi bi-upload"></i> Salvar</button>
+        <button class="btn btn-outline-success" type="button" wire:click="saveAlters"><i class="bi bi-upload"></i> Salvar</button>
     </div>
+    @endif
 
 </div>

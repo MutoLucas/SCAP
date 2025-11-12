@@ -148,17 +148,25 @@
                     <td>{{ $parada->Duracao ? $parada->Duracao . 'min' : 'Sem duracao' }}</td>
                     <td>{{ $parada->EqpGerador ? $parada->EqpGerador : 'Sem Equipamento Gerador' }}</td>
                     <td>
+                        @if (auth()->check())
                         <div class="d-flex justify-content-center gap-2">
                             <button class="btn btn-sm btn-primary" wire:click="editLine({{ $parada->Id }})"><i class="bi bi-pen"></i></button>
 
                             <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#insertSameLine{{ $loop->index }}"><i class="bi bi-copy"></i></button>
 
+                            @if(auth()->user()->NivelAcesso == 'Administrador')
                             <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteLine" wire:click="selectToDelete({{ $parada->Id }})"><i class="bi bi-x-square"></i></button>
+                            @endif
 
                             <button class="btn btn-sm btn-success" wire:click="selectToDivide({{ $parada->Id }})" data-bs-toggle="modal" data-bs-target="#divideLine">
                                 <i class="bi bi-hr"></i>
                             </button>
                         </div>
+                        @else
+                        <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-sm btn-success" wire:click="editLine({{ $parada->Id }})"><i class="bi bi-eye"></i></button>
+                        </div>
+                        @endif
                     </td>
                 </tr>
 

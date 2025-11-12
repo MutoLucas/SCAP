@@ -16,6 +16,8 @@
 
         <!-- Dropdown de Usuário -->
         <div class="dropdown">
+
+            @if(auth()->check())
             <button class="btn btn-secondary dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <span>Olá, {{ auth()->user()->Nome }}</span>
             </button>
@@ -38,6 +40,10 @@
                     </form>
                 </li>
             </ul>
+            @else
+            <a href="{{ route('login.index') }}" class="btn btn-warning btn-sm">Iniciar Sessão</a>
+            @endif
+
         </div>
 
     </div>

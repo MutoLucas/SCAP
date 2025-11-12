@@ -52,7 +52,10 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                <div class="d-flex justify-content-between gap-3">
+                    <a href="{{ route('lobby') }}" class="btn btn-outline-dark col-3"><i class="bi bi-house"></i> Home</a>
+                    <button type="submit" class="btn btn-primary col-9">Entrar</button>
+                </div>
             </form>
         </div>
     </div>
