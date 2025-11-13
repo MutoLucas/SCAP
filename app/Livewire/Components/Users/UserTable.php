@@ -17,6 +17,10 @@ class UserTable extends Component
     public $filterLogin;
     public $filterRole;
 
+    public $messageModalEdit = [];
+    public $userToEdit;
+    public $editRole;
+
     public function render()
     {
         return view('livewire.components.users.user-table');
@@ -27,6 +31,7 @@ class UserTable extends Component
     public function logins()
     {
         $query = Login::query();
+        $query->where('Login','!=',auth()->user()->Login);
 
         if($this->filterLogin){
             $query->where('Login','like','%'.$this->filterLogin.'%');
@@ -41,6 +46,44 @@ class UserTable extends Component
         }
 
         return $query->paginate(5,'*','logins');
+    }
+
+    public function setUserToEdit($login)
+    {
+        $this->userToEdit = Login::find($login);
+        $this->editRole = $this->userToEdit->NivelAcesso;
+    }
+
+    public function updateRole()
+    {
+        $this->validate([
+            'editRole'=>'required|exists:login,NivelAcesso'
+        ],[
+            'editRole.required' => 'O campo nível de acesso é obrigatório.',
+            'editRole.exists'   => 'O nível de acesso informado não é válido.',
+        ]);
+
+        $this->userToEdit->NivelAcesso = $this->editRole;
+        $this->userToEdit->save();
+
+        return $this->messageModalEdit = [
+            'message'=>'Nivel de Acesso alterado com sucesso',
+            'severity'=>'alert-success',
+            'icon'=>'bi bi-check-circle'
+        ];
+    }
+
+    public function resetPassword()
+    {
+        $password = str_replace(' ','',$this->userToEdit->Login).'@'.'scap';
+        $this->userToEdit->Senha = $password;
+        $this->userToEdit->save();
+
+        return $this->messageModalEdit = [
+            'message'=>'Senha resetada com sucesso',
+            'severity'=>'alert-success',
+            'icon'=>'bi bi-lock'
+        ];
     }
 
     public function resetSearch()

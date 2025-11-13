@@ -53,9 +53,13 @@
                     </span>
                 </td>
                 <td>
-                    <button class="btn btn-sm btn-primary">
+                    @if(in_array($login->NivelAcesso,['Administrador','Operador','Manutentor']))
+                    <button type="button" class="btn btn-sm btn-primary" wire:click="setUserToEdit('{{ $login->Login }}')" data-bs-toggle="modal" data-bs-target="#editUser">
                         <i class="bi bi-info-circle"></i>
                     </button>
+                    @else
+
+                    @endif
                 </td>
             </tr>
             @endforeach
@@ -63,5 +67,45 @@
     </table>
     <div>
         {{ $this->logins->links('vendor.livewire.bootstrap', ['scrollTo' => false]) }}
+    </div>
+
+    <div id="editUser" class="modal fade" tabindex="-1" wire:ignore.self>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Usuario: {{ $userToEdit->Nome ?? '' }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    @if(isset($messageModalEdit['message']))
+                    <div class="alert {{ $messageModalEdit['severity'] }} alert-dismissible fade show" role="alert">
+                        <strong><i class="{{ $messageModalEdit['icon'] }}"></i></strong> {{ $messageModalEdit['message'] }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    @endif
+
+                    <div class="mb-3">
+                        <label class="form-label">Nivel de Acesso</label>
+                        <select class="form-select form-select-sm" wire:model="editRole">
+                            <option value="">Selecione...</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Manutentor">Manutentor</option>
+                            <option value="Operador">Operador</option>
+                        </select>
+                        @error('editRole')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-warning" wire:click="resetPassword">Resetar Senha</button>
+                    <button type="button" class="btn btn-primary" wire:click="updateRole">Alterar Nivel de Acesso</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
