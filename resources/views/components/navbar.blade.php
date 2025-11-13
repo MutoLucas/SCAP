@@ -32,7 +32,7 @@
                 <li>
                     <h6 class="dropdown-header">Conta - {{ auth()->user()->role['role'] }}</h6>
                 </li>
-                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="{{ route('users.profile') }}">Perfil</a></li>
                 <li><a class="dropdown-item" href="#">Configurações</a></li>
                 <li>
                     <hr class="dropdown-divider">

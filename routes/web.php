@@ -20,4 +20,6 @@ Route::get('editline/{lineId}',[LobbyController::class,'viewEditLine'])->name('e
 
 Route::prefix('/users')->middleware(VerifyAuth::class)->group(function (){
     Route::get('/lobby',[UserController::class,'showIndex'])->name('users.index');
+
+    Route::get('/profile',[UserController::class,'showProfile'])->name('users.profile');
 });
