@@ -12,7 +12,7 @@
 
                 <div class="p-1">
                     <label class="form-label">Tag Gerador</label>
-                    <select class="form-select form-select-sm" wire:model="tagGerador">
+                    <select class="form-select form-select-sm border-primary" wire:model="tagGerador">
                         <option value="">Selecione...</option>
                         @foreach ($this->equipamentos as $equipamento)
                             <option value="{{ $equipamento->Equipamento }}">{{ $equipamento->Equipamento }}</option>
@@ -25,7 +25,7 @@
 
                 <div class="p-1">
                     <label class="form-label">Tipo de Código</label>
-                    <select wire:model.lazy="tipCod" class="form-select form-select-sm">
+                    <select wire:model.lazy="tipCod" class="form-select form-select-sm border-primary">
                         <option value="">Selecione...</option>
                         @foreach ($this->tipoCodigos as $tipCod)
                             <option value="{{ $tipCod->{"Tipo de Código"} }}">{{ $tipCod->{"Tipo de Código"} }}</option>
@@ -38,7 +38,7 @@
 
                 <div class="p-1">
                     <label class="form-label">Grupo de Código</label>
-                    <select wire:model.lazy="grupCod" class="form-select form-select-sm">
+                    <select wire:model.lazy="grupCod" class="form-select form-select-sm border-primary">
                         <option value="">Selecione...</option>
                         @foreach ($this->grupoCodigos as $grupCod)
                             <option value="{{ $grupCod->{"Grupo de Código"} }}">{{ $grupCod->{"Grupo de Código"} }}
@@ -52,7 +52,7 @@
 
                 <div class="p-1">
                     <label class="form-label">Código de Falha</label>
-                    <select wire:model.lazy="falCod" class="form-select form-select-sm">
+                    <select wire:model.lazy="falCod" class="form-select form-select-sm border-primary">
                         <option value="">Selecione...</option>
                         @foreach ($this->codigoFalhas as $falCod)
                             <option value="{{ $falCod->{"Código das Falhas"} }}">{{ $falCod->{"Código das Falhas"} }}
@@ -66,7 +66,7 @@
 
                 <div class="p-1">
                     <label class="form-label">Causa Aparente</label>
-                    <select wire:model.lazy="causaAparente" class="form-select form-select-sm">
+                    <select wire:model.lazy="causaAparente" class="form-select form-select-sm border-primary">
                         <option value="">Selecione...</option>
                         @foreach ($this->causasAparentes as $causaAparente)
                             <option value="{{ $causaAparente->CausaAparente }}">{{ $causaAparente->CausaAparente }}
@@ -80,7 +80,7 @@
 
                 <div class="p-1">
                     <label class="form-label">Componente</label>
-                    <select wire:model.lazy="componente" class="form-select form-select-sm">
+                    <select wire:model.lazy="componente" class="form-select form-select-sm border-primary">
                         <option value="">Selecione...</option>
                         @foreach ($this->componentes as $componente)
                             <option value="{{ $componente->Componente }}">{{ $componente->Componente }}</option>
@@ -104,7 +104,7 @@
 
                 <div class="p-1">
                     <label class="form-label">Processo</label>
-                    <select class="form-select form-select-sm" wire:model.lazy="processo">
+                    <select class="form-select form-select-sm border-primary" wire:model.lazy="processo">
                         <option value="">Selecione...</option>
                         @foreach ($this->processos as $processo)
                             <option value="{{ $processo->Processo }}">{{ $processo->Processo }}</option>
@@ -117,7 +117,7 @@
 
                 <div class="p-1">
                     <label class="form-label">Sistema</label>
-                    <select class="form-select form-select-sm" wire:model.lazy="sistema">
+                    <select class="form-select form-select-sm border-primary" wire:model.lazy="sistema">
                         <option value="">Selecione...</option>
                         @foreach ($this->sistemas as $sistema)
                             <option value="{{ $sistema->Sistema }}">{{ $sistema->Sistema }}</option>
@@ -130,7 +130,7 @@
 
                 <div class="p-1">
                     <label class="form-label">Equipamento</label>
-                    <select class="form-select form-select-sm" wire:model.lazy="equipamento">
+                    <select class="form-select form-select-sm border-primary" wire:model.lazy="equipamento">
                         <option value="">Selecione...</option>
                         @foreach ($this->equipamentos as $equipamento)
                             <option value="{{ $equipamento->Equipamento }}">{{ $equipamento->Equipamento }}</option>
@@ -143,7 +143,7 @@
 
                 <div class="p-1">
                     <label class="form-label">Inicio</label>
-                    <input type="datetime-local" class="form-control" wire:model.lazy="inicio">
+                    <input type="datetime-local" class="form-control border-primary" wire:model.lazy="inicio">
                     @error('Inicio')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -151,7 +151,7 @@
 
                 <div class="p-1">
                     <label class="form-label">Fim</label>
-                    <input type="datetime-local" class="form-control" wire:model.lazy="fim">
+                    <input type="datetime-local" class="form-control border-primary" wire:model.lazy="fim">
                     @error('fim')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -160,7 +160,7 @@
                 <div class="p-1">
                     {{ $this->turno }}
                     <label class="form-label">Turno</label>
-                    <select class="form-select form-select-sm" wire:model.lazy="turno">
+                    <select class="form-select form-select-sm border-primary" wire:model.lazy="turno">
                         <option value="">Selecione...</option>
                         @foreach ($this->turnos as $turno)
                             <option value="{{ $turno->Turno }}">{{ $turno->Turno }} - {{ $turno->Horario }}</option>
@@ -173,7 +173,7 @@
 
                 <div class="p-1">
                     <label class="form-label">Operador</label>
-                    <select class="form-select form-select-sm" wire:model.lazy="operador">
+                    <select class="form-select form-select-sm border-primary" wire:model.lazy="operador">
                         <option value="">Selecione...</option>
                         @foreach ($this->operadores as $operador)
                             <option value="{{ $operador->Login }}">{{ $operador->Nome }}</option>

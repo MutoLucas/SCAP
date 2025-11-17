@@ -11,7 +11,7 @@
 
                 <div>
                     <label for="form-label">Processo</label>
-                    <select wire:model.lazy="filterProcesso" class="form-select form-select-sm">
+                    <select wire:model.lazy="filterProcesso" class="form-select form-select-sm border-primary">
                         <option value="">Selecione...</option>
                         @foreach ($this->processos as $processo)
                         <option value="{{ $processo->Processo }}">{{ $processo->Processo }}</option>
@@ -21,7 +21,7 @@
 
                 <div>
                     <label for="form-label">Sistema</label>
-                    <select wire:model.lazy="filterSistema" class="form-select form-select-sm">
+                    <select wire:model.lazy="filterSistema" class="form-select form-select-sm border-primary">
                         <option value="">Selecione...</option>
                         @foreach ($this->sistemas as $sistema)
                         <option value="{{ $sistema->Sistema }}">{{ $sistema->Sistema }}</option>
@@ -31,7 +31,7 @@
 
                 <div>
                     <label for="form-label">Equipamento</label>
-                    <select wire:model.lazy="filterEquipamento" class="form-select form-select-sm">
+                    <select wire:model.lazy="filterEquipamento" class="form-select form-select-sm border-primary">
                         <option value="">Selecione...</option>
                         @foreach ($this->equipamentos as $equipamento)
                         <option value="{{ $equipamento->Equipamento }}">{{ $equipamento->Equipamento }}</option>
@@ -52,12 +52,12 @@
 
                 <div>
                     <label for="form-label">Inicio</label>
-                    <input wire:model.live="filterDataInicio" type="datetime-local" class="form-control">
+                    <input wire:model.live="filterDataInicio" type="datetime-local" class="form-control border-primary">
                 </div>
 
                 <div>
                     <label for="form-label">Fim</label>
-                    <input wire:model.live="filterDataFim" type="datetime-local" class="form-control">
+                    <input wire:model.live="filterDataFim" type="datetime-local" class="form-control border-primary">
                 </div>
 
             </div>
