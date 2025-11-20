@@ -133,7 +133,10 @@
                 </button>
 
                 <button class="btn btn-outline-success" wire:click="exportToExcel">
-                    <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+                    <i class="bi bi-file-earmark-spreadsheet-fill" wire:loading.class="visually-hidden"></i>
+                    <div class="spinner-grow text-success" role="status" wire:loading>
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </button>
             </div>
         </div>
