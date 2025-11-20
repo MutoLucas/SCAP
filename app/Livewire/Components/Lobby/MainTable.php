@@ -105,7 +105,11 @@ class MainTable extends Component
 
             if ($this->filterDataFim) {
                 $data = Carbon::parse($this->filterDataFim)->format('Y-m-d H:i:s');
-                $query->whereRaw("CONVERT(datetime, DataFim, 120) <= CONVERT(datetime, ?, 120)", [$data]);
+
+                $query->where(function($q) use ($data) {
+                    $q->whereRaw("CONVERT(datetime, DataFim, 120) <= CONVERT(datetime, ?, 120)", [$data])
+                    ->orWhereNull('DataFim');
+                });
             }
 
             if ($this->filterId){
