@@ -108,7 +108,7 @@ class EditLine extends Component
         $this->turno = $parada->Turno;
         $this->operador = $parada->Operador;
         $this->inicio = Carbon::parse($parada->DataInicio)->format('Y-m-d\TH:i');
-        $this->fim = Carbon::parse($parada->DataFim)->format('Y-m-d\TH:i');
+        $this->fim = $parada->DataFim ? Carbon::parse($parada->DataFim)->format('Y-m-d\TH:i') : null;
         $this->apropriador = $parada->Apropriador;
     }
 
