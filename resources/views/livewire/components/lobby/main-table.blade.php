@@ -66,6 +66,18 @@
 
     <div class="container shadow-lg mt-4 p-3">
 
+        @if (isset($messageExecel['message']))
+        <div class="alert alert-{{ $messageExecel['severity'] }} alert-dismissible fade show" role="alert">
+            <strong>
+                @if (isset($messageExecel['icon']))
+                <i class="{{ $messageExecel['icon'] }}"></i>
+                @endif
+                {{ $messageExecel['message'] }}
+            </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
         @if (Session::has('successDivideLine'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>
@@ -125,6 +137,7 @@
                 </button>
             </div>
         </div>
+        @if ($this->paradas)
         <table class="table text-center table-bordered table-striped table-hover caption-top">
             <thead class="table-dark">
                 <tr>
@@ -309,5 +322,14 @@
         <div>
             {{ $this->paradas->links('vendor.livewire.bootstrap', ['scrollTo' => false]) }}
         </div>
+        @else
+        <div class="container py-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h3 class="card-title mb-0">Favor, Selecionar um período</h3>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 </div>

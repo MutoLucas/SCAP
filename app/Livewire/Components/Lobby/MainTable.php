@@ -29,6 +29,7 @@ class MainTable extends Component
     public $filterDataFim;
     public $filterId;
 
+    public $messageExecel = [];
     public $messageCopyLine = [];
     public $messageDeleteLine = [];
     public $messageDivideLine = [];
@@ -82,35 +83,39 @@ class MainTable extends Component
     #[Computed]
     public function paradas()
     {
-        $query = Parada::query();
+        if($this->filterDataInicio && $this->filterDataFim){
+            $query = Parada::query();
 
-        if($this->filterProcesso){
-            $query->where('Producao',$this->filterProcesso);
+            if($this->filterProcesso){
+                $query->where('Producao',$this->filterProcesso);
+            }
+
+            if($this->filterSistema){
+                $query->where('Sistema',$this->filterSistema);
+            }
+
+            if($this->filterEquipamento){
+                $query->where('Equipamento',$this->filterEquipamento);
+            }
+
+            if ($this->filterDataInicio) {
+                $data = Carbon::parse($this->filterDataInicio)->format('Y-m-d H:i:s');
+                $query->whereRaw("CONVERT(datetime, DataInicio, 120) >= CONVERT(datetime, ?, 120)", [$data]);
+            }
+
+            if ($this->filterDataFim) {
+                $data = Carbon::parse($this->filterDataFim)->format('Y-m-d H:i:s');
+                $query->whereRaw("CONVERT(datetime, DataFim, 120) <= CONVERT(datetime, ?, 120)", [$data]);
+            }
+
+            if ($this->filterId){
+                $query->where('Id',$this->filterId);
+            }
+
+            return $query->orderBy('DataInicio','desc')->paginate(8,'*','paradas');
         }
 
-        if($this->filterSistema){
-            $query->where('Sistema',$this->filterSistema);
-        }
-
-        if($this->filterEquipamento){
-            $query->where('Equipamento',$this->filterEquipamento);
-        }
-
-        if ($this->filterDataInicio) {
-            $data = Carbon::parse($this->filterDataInicio)->format('Y-m-d H:i:s');
-            $query->whereRaw("CONVERT(datetime, DataInicio, 120) >= CONVERT(datetime, ?, 120)", [$data]);
-        }
-
-        if ($this->filterDataFim) {
-            $data = Carbon::parse($this->filterDataFim)->format('Y-m-d H:i:s');
-            $query->whereRaw("CONVERT(datetime, DataFim, 120) <= CONVERT(datetime, ?, 120)", [$data]);
-        }
-
-        if ($this->filterId){
-            $query->where('Id',$this->filterId);
-        }
-
-        return $query->orderBy('DataInicio','desc')->paginate(8,'*','paradas');
+        return false;
     }
 
     public function insertSameLine($linhaId)
@@ -233,6 +238,14 @@ class MainTable extends Component
 
         if ($this->filterId){
             $query->where('Id',$this->filterId);
+        }
+
+        if($query->count() > 2000){
+            return $this->messageExecel = [
+                'message'=>'A consulta excedeu 2000 linhas.',
+                'severity'=>'danger',
+                'icon'=>'bi bi-exclamation-triangle',
+            ];
         }
 
         return Excel::download(new ParadasExport($query->orderBy('DataInicio','desc')->get()->toArray()),'paradas_'.now()->format('d-m-Y').'.xlsx');
