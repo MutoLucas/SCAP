@@ -156,7 +156,7 @@
 
             <tbody class="table-info">
                 @foreach ($this->paradas as $parada)
-                <tr>
+                <tr wire:key="{{ $parada->id }}">
                     <td>{{ $parada->Producao ? $parada->Producao : 'Sem processo aparente' }}</td>
                     <td>{{ $parada->Equipamento ? $parada->Equipamento : 'Sem equipamento' }}</td>
                     <td>{{ $parada->DataInicio ? $parada->data_inicial->format('d/m/Y H:i') : 'Sem data inicial' }}
