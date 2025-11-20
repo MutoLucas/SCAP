@@ -125,7 +125,7 @@
 
             <div class="d-flex justify-content-between gap-2">
                 <div class="input-group">
-                    <input wire:model.lazy="filterId" type="text" class="form-control form-control-sm" placeholder="Ex: 2142578 (Id)">
+                    <input wire:model.lazy="filterId" type="text" class="form-control form-control-sm" placeholder="Ex: 2142578">
                 </div>
 
                 <button class="btn btn-outline-warning" wire:click="refreshFilters">
@@ -141,7 +141,6 @@
         <table class="table text-center table-bordered table-striped table-hover caption-top">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Producao</th>
                     <th scope="col">Equipamento</th>
                     <th scope="col">Data Inicio</th>
@@ -155,12 +154,11 @@
             <tbody class="table-info">
                 @foreach ($this->paradas as $parada)
                 <tr>
-                    <td>{{ $parada->Id }}</td>
                     <td>{{ $parada->Producao ? $parada->Producao : 'Sem processo aparente' }}</td>
                     <td>{{ $parada->Equipamento ? $parada->Equipamento : 'Sem equipamento' }}</td>
                     <td>{{ $parada->DataInicio ? $parada->data_inicial->format('d/m/Y H:i') : 'Sem data inicial' }}
                     </td>
-                    <td>{{ $parada->DataFim ? $parada->data_final->format('d/m/Y H:i') : 'Sem data inicial' }}
+                    <td>{{ $parada->DataFim ? $parada->data_final->format('d/m/Y H:i') : 'Sem data Fim' }}
                     </td>
                     <td>{{ $parada->Duracao ? $parada->Duracao . 'min' : 'Não Fechada' }}</td>
                     <td>{{ $parada->EqpGerador ? $parada->EqpGerador : 'Sem Equipamento Gerador' }}</td>
