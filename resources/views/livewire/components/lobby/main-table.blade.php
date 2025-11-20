@@ -160,9 +160,9 @@
                     <td>{{ $parada->Equipamento ? $parada->Equipamento : 'Sem equipamento' }}</td>
                     <td>{{ $parada->DataInicio ? $parada->data_inicial->format('d/m/Y H:i') : 'Sem data inicial' }}
                     </td>
-                    <td>{{ $parada->DataInicio ? $parada->data_final->format('d/m/Y H:i') : 'Sem data inicial' }}
+                    <td>{{ $parada->DataFim ? $parada->data_final->format('d/m/Y H:i') : 'Sem data inicial' }}
                     </td>
-                    <td>{{ $parada->Duracao ? $parada->Duracao . 'min' : 'Sem duracao' }}</td>
+                    <td>{{ $parada->Duracao ? $parada->Duracao . 'min' : 'Não Fechada' }}</td>
                     <td>{{ $parada->EqpGerador ? $parada->EqpGerador : 'Sem Equipamento Gerador' }}</td>
                     <td>
                         @if (auth()->check())
