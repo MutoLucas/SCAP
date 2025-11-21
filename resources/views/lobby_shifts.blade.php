@@ -12,6 +12,7 @@
 
     <livewire:components.shift.form-create/>
 
+    <livewire:components.shift.main-table/>
 </div>
 
 @endsection

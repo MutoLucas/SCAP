@@ -19,4 +19,8 @@ class OcorrenciaTurno extends Model
         'Operador',
         'DescricaoOcorrencia',
     ];
+
+    protected $casts = [
+        'DataOcorrencia'=>'datetime'
+    ];
 }
