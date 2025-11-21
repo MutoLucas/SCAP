@@ -16,6 +16,9 @@
                 <li class="nav-item">
                     <a class="nav-link active text-white" aria-current="page" href="{{ route('users.index') }}">Usuarios</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active text-white" aria-current="page" href="{{ route('shift.index') }}">Turnos de Ocorrência</a>
+                </li>
                 @endif
             </ul>
         </div>
