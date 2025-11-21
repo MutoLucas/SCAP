@@ -18,6 +18,8 @@ class MainTable extends Component
 {
     use WithPagination;
 
+    public $messageDelete = [];
+
     public $filterSistema;
     public $filterDataFim;
     public $filterProcesso;

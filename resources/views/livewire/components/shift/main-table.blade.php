@@ -14,7 +14,7 @@
                     <select wire:model.lazy="filterProcesso" class="form-select form-select-sm border-primary">
                         <option value="">Selecione...</option>
                         @foreach ($this->processos as $processo)
-                        <option value="{{ $processo->Processo }}">{{ $processo->Processo }}</option>
+                            <option value="{{ $processo->Processo }}">{{ $processo->Processo }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -24,7 +24,7 @@
                     <select wire:model.lazy="filterSistema" class="form-select form-select-sm border-primary">
                         <option value="">Selecione...</option>
                         @foreach ($this->sistemas as $sistema)
-                        <option value="{{ $sistema->Sistema }}">{{ $sistema->Sistema }}</option>
+                            <option value="{{ $sistema->Sistema }}">{{ $sistema->Sistema }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -34,7 +34,7 @@
                     <select wire:model.lazy="filterEquipamento" class="form-select form-select-sm border-primary">
                         <option value="">Selecione...</option>
                         @foreach ($this->equipamentos as $equipamento)
-                        <option value="{{ $equipamento->Equipamento }}">{{ $equipamento->Equipamento }}</option>
+                            <option value="{{ $equipamento->Equipamento }}">{{ $equipamento->Equipamento }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -66,6 +66,13 @@
 
     <div class="container shadow-lg mt-4 p-3">
 
+        @if(Session::has('successDelete'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong><i class="bi bi-check-circle"></i></strong> {{ Session('successDelete') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <div class="d-flex justify-content-between p-2 text-success">
             <div>
                 <i class="bi bi-clock"></i> Tabela de Ocorrencias de Turnos
@@ -78,49 +85,52 @@
                 </button>
             </div>
         </div>
-        @if ($this->ocorrencias)
-        <table class="table text-center table-bordered table-striped table-hover caption-top">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">Processo</th>
-                    <th scope="col">Sistema</th>
-                    <th scope="col">Equipamento</th>
-                    <th scope="col">Data</th>
-                    <th scope="col">Turno</th>
-                    <th scope="col">Operador</th>
-                    <th scope="col">Ação</th>
-                </tr>
-            </thead>
 
-            <tbody class="table-info">
-                @foreach ($this->ocorrencias as $ocorrencia)
-                <tr wire:key="{{ $ocorrencia->Id }}">
-                    <td>{{ $ocorrencia->Processo }}</td>
-                    <td>{{ $ocorrencia->Sistema }}</td>
-                    <td>{{ $ocorrencia->Equipamento }}</td>
-                    <td>{{ $ocorrencia->data->format('d/m/Y H:i') }}</td>
-                    <td>{{ $ocorrencia->Turno }}</td>
-                    <td>
-                        <span class="badge text-bg-primary"><i class="bi bi-person"></i>{{ $ocorrencia->Operador }}</span>
-                    </td>
-                    <td>
-                        <livewire:components.shift.modal-edit wire:key="{{ $ocorrencia->Id }}" :key="$ocorrencia->Id" :ocorrenciaId="$ocorrencia->Id"/>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <div>
-            {{ $this->ocorrencias->links('vendor.livewire.bootstrap', ['scrollTo' => false]) }}
-        </div>
+        @if ($this->ocorrencias)
+            <table class="table text-center table-bordered table-striped table-hover caption-top">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Processo</th>
+                        <th scope="col">Sistema</th>
+                        <th scope="col">Equipamento</th>
+                        <th scope="col">Data</th>
+                        <th scope="col">Turno</th>
+                        <th scope="col">Operador</th>
+                        <th scope="col">Ação</th>
+                    </tr>
+                </thead>
+
+                <tbody class="table-info">
+                    @foreach ($this->ocorrencias as $ocorrencia)
+                        <tr wire:key="{{ $ocorrencia->Id }}">
+                            <td>{{ $ocorrencia->Processo }}</td>
+                            <td>{{ $ocorrencia->Sistema }}</td>
+                            <td>{{ $ocorrencia->Equipamento }}</td>
+                            <td>{{ $ocorrencia->data->format('d/m/Y H:i') }}</td>
+                            <td>{{ $ocorrencia->Turno }}</td>
+                            <td>
+                                <span class="badge text-bg-primary"><i
+                                        class="bi bi-person"></i>{{ $ocorrencia->Operador }}</span>
+                            </td>
+                            <td>
+                                <livewire:components.shift.modal-edit wire:key="{{ $ocorrencia->Id }}"
+                                    :key="$ocorrencia->Id" :ocorrenciaId="$ocorrencia->Id" />
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div>
+                {{ $this->ocorrencias->links('vendor.livewire.bootstrap', ['scrollTo' => false]) }}
+            </div>
         @else
-        <div class="container py-4">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h3 class="card-title mb-0">Favor, Selecionar um período</h3>
+            <div class="container py-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <h3 class="card-title mb-0">Favor, Selecionar um período</h3>
+                    </div>
                 </div>
             </div>
-        </div>
         @endif
     </div>
 </div>

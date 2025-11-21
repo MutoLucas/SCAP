@@ -176,4 +176,10 @@ class ModalEdit extends Component
             'icon'=>'bi bi-check-circle',
         ];
     }
+
+    public function deleteOcorrencia()
+    {
+        $this->ocorrencia->delete();
+        return redirect()->route('shift.index')->with('successDelete','Ocorrencia Deletada com Sucesso');
+    }
 }

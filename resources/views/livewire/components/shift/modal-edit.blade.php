@@ -148,8 +148,40 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">fechar</button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#deleteocorrencia{{ $this->ocorrencia->Id }}">Deletar</button>
                     <button type="button" class="btn btn-primary" wire:click="updateOcorrencia">Salvar
                         Alterações</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteocorrencia{{ $this->ocorrencia->Id }}" data-bs-backdrop="static"
+        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Deletar Ocorrência</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <p class="text-center fs-5">
+                        Tem certeza que deseja deletar a ocorrência
+                        <span class="text-success fw-bold">#{{ $this->ocorrencia->Id }}</span>?
+                    </p>
+
+                    <div class="alert alert-warning text-center py-2 mt-3">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        Esta ação não pode ser desfeita.
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" wire:click="deleteOcorrencia">Deletar Ocorrência</button>
                 </div>
             </div>
         </div>
