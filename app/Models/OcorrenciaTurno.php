@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Carbon\Carbon;
+
 class OcorrenciaTurno extends Model
 {
     protected $table = 'tbl_OcorrenciaTurno';
@@ -20,7 +22,8 @@ class OcorrenciaTurno extends Model
         'DescricaoOcorrencia',
     ];
 
-    protected $casts = [
-        'DataOcorrencia'=>'datetime'
-    ];
+    public function getDataAttribute()
+    {
+        return Carbon::parse($this->DataOcorrencia);
+    }
 }

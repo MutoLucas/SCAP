@@ -76,13 +76,6 @@
                 <button class="btn btn-outline-warning" wire:click="refreshFilters">
                     <i class="bi bi-arrow-clockwise"></i>
                 </button>
-
-                <button class="btn btn-outline-success" wire:click="exportToExcel">
-                    <i class="bi bi-file-earmark-spreadsheet-fill" wire:loading.class="visually-hidden"></i>
-                    <div class="spinner-grow text-success" role="status" wire:loading>
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </button>
             </div>
         </div>
         @if ($this->ocorrencias)
@@ -105,15 +98,13 @@
                     <td>{{ $ocorrencia->Processo }}</td>
                     <td>{{ $ocorrencia->Sistema }}</td>
                     <td>{{ $ocorrencia->Equipamento }}</td>
-                    <td>{{ $ocorrencia->DataOcorrencia->format('d/m/Y H:i') }}</td>
+                    <td>{{ $ocorrencia->data->format('d/m/Y H:i') }}</td>
                     <td>{{ $ocorrencia->Turno }}</td>
                     <td>
                         <span class="badge text-bg-primary"><i class="bi bi-person"></i>{{ $ocorrencia->Operador }}</span>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary">
-                            <i class="bi bi-info-circle"></i>
-                        </button>
+                        <livewire:components.shift.modal-edit wire:key="{{ $ocorrencia->Id }}" :key="$ocorrencia->Id" :ocorrenciaId="$ocorrencia->Id"/>
                     </td>
                 </tr>
                 @endforeach

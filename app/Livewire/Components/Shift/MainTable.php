@@ -3,6 +3,7 @@
 namespace App\Livewire\Components\Shift;
 
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use Livewire\Attributes\Computed;
 
@@ -58,6 +59,7 @@ class MainTable extends Component
         return Equipamento::get()->all();
     }
 
+    #[On('ocorrencia-criada')]
     #[Computed]
     public function ocorrencias()
     {
