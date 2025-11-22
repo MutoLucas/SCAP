@@ -36,7 +36,7 @@ class FormCreate extends Component
             'sistema'=>'required|exists:tbl_Sistemas,Sistema',
             'processo'=>'required|exists:tbl_Processos,Processo',
             'operador'=>'required|exists:login,Login',
-            'descricao'=>'nullable|max:400',
+            'descricao'=>'required|max:400',
             'equipamento'=>'required|exists:tbl_Equipamento,Equipamento',
         ];
     }
@@ -58,6 +58,7 @@ class FormCreate extends Component
             'operador.required' => 'O operador é obrigatório.',
             'operador.exists' => 'O operador informado não foi encontrado.',
 
+            'descricao.required' => 'Informe uma descrição.',
             'descricao.max' => 'A descrição deve ter no máximo 400 caracteres.',
 
             'equipamento.required' => 'O equipamento é obrigatório.',
