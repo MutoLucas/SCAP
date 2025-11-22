@@ -1,4 +1,4 @@
-<div class="container col-8">
+<div class="container col-12 col-lg-8">
     <div class="container d-flex justify-content-between gap-3">
 
         <div class="border border-light-subtle rounded-2 w-50 p-3 shadow-lg">
@@ -87,6 +87,7 @@
         </div>
 
         @if ($this->ocorrencias)
+        <div class="table-responsive">
             <table class="table text-center table-bordered table-striped table-hover caption-top">
                 <thead class="table-dark">
                     <tr>
@@ -123,6 +124,7 @@
             <div>
                 {{ $this->ocorrencias->links('vendor.livewire.bootstrap', ['scrollTo' => false]) }}
             </div>
+        </div>
         @else
             <div class="container py-4">
                 <div class="card shadow-sm">

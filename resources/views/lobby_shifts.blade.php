@@ -8,7 +8,7 @@
     <small class="fs-5">Gerenciar Turnos de Ocorrência.</small>
 </div>
 
-<div class="container md:d-flex gap-3 mt-3">
+<div class="container d-lg-flex gap-2 mt-3">
 
     <livewire:components.shift.form-create/>
 
