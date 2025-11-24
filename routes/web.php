@@ -26,6 +26,6 @@ Route::prefix('/users')->middleware(VerifyAuth::class)->group(function (){
     Route::get('/profile',[UserController::class,'showProfile'])->name('users.profile');
 });
 
-Route::prefix('shifts')->middleware([VerifyAuth::class,VerifyAdmin::class])->group(function (){
+Route::prefix('shifts')->middleware([VerifyAuth::class])->group(function (){
     Route::get('/lobby',[ShiftController::class,'lobbyIndex'])->name('shift.index');
 });
