@@ -34,13 +34,8 @@ class EditLine extends Component
     public $falCod;
     public $causaAparente;
     public $componente;
-    public $processo;
-    public $sistema;
-    public $equipamento;
     public $turno;
     public $operador;
-    public $inicio;
-    public $fim;
 
     public function rules()
     {
@@ -52,13 +47,8 @@ class EditLine extends Component
             'falCod'=>'required|exists:tbl_CódigoDasFalhas,Código das Falhas',
             'causaAparente'=>'nullable|exists:tbl_CausaAparente,CausaAparente',
             'componente'=>'required|exists:tbl_Componente,Componente',
-            'processo'=>'required|exists:tbl_Processos,Processo',
-            'sistema'=>'required|exists:tbl_Sistemas,Sistema',
-            'equipamento'=>'required|exists:tbl_Equipamento,Equipamento',
             'turno'=>'required|exists:tbl_turno,Turno',
             'operador'=>'required|exists:login,Login',
-            'inicio'=>'required',
-            'fim'=>'required',
         ];
     }
 
@@ -77,18 +67,10 @@ class EditLine extends Component
             'causaAparente.exists'=>'Erro ao procurar Causa',
             'componente.required'=>'Necessario selecionar',
             'componente.exists'=>'Erro ao procurar Componente',
-            'processo.required'=>'Necessario selecionar',
-            'processo.exists'=>'Erro ao procurar Processo',
-            'sistema.required'=>'Necessario selecionar',
-            'sistema.exists'=>'Erro ao procurar Sistema',
-            'equipamento.required'=>'Necessario selecionar',
-            'equipamento.exists'=>'Erro ao procurar Equipamento',
             'turno.required'=>'Necessario selecionar',
             'turno.exists'=>'Erro ao procurar Turno',
             'operador.required'=>'Necessario selecionar',
             'operador.exists'=>'Erro ao procurar Operador',
-            'inicio.required'=>'Necessario informar o Inicio',
-            'fim.required'=>'Necessario informar o Fim',
         ];
     }
 
@@ -102,24 +84,14 @@ class EditLine extends Component
         $this->falCod = $parada->CodigoFalha;
         $this->causaAparente = $parada->CausaAparente;
         $this->componente = $parada->Componente;
-        $this->processo = $parada->Producao;
-        $this->sistema = $parada->Sistema;
-        $this->equipamento = $parada->Equipamento;
         $this->turno = $parada->Turno;
         $this->operador = $parada->Operador;
-        $this->inicio = Carbon::parse($parada->DataInicio)->format('Y-m-d\TH:i');
-        $this->fim = $parada->DataFim ? Carbon::parse($parada->DataFim)->format('Y-m-d\TH:i') : null;
         $this->apropriador = $parada->Apropriador;
     }
 
     public function render()
     {
         return view('livewire.components.parada.edit-line');
-    }
-
-    public function updatedProcesso()
-    {
-        $this->sistema = null;
     }
 
     public function updatedTipCod()
@@ -234,15 +206,6 @@ class EditLine extends Component
         $parada = $this->getParada($this->lineId);
         // dd($this->observacao,$this->tagGerador,$this->grupCod,$this->tipCod,$this->falCod,$this->causaAparente,$this->componente,$this->processo,$this->sistema,$this->equipamento,$this->turno,$this->operador,$this->inicio,$this->fim);
 
-        $newInicio = Carbon::parse($this->inicio)->format('Y-m-d H:i:s');
-        $newFim = Carbon::parse($this->fim)->format('Y-m-d H:i:s');
-
-
-        $parada->Producao = $this->pull('processo');
-        $parada->Sistema = $this->pull('sistema');
-        $parada->Equipamento = $this->pull('equipamento');
-        $parada->DataInicio = DB::raw("CONVERT(datetime, '{$newInicio}', 120)");
-        $parada->DataFim = DB::raw("CONVERT(datetime, '{$newFim}', 120)");
         $parada->EqpGerador = $this->pull('tagGerador');
         $parada->TipoCodigo = $this->pull('tipCod');
         $parada->GrupoCodigo = $this->pull('grupCod');
