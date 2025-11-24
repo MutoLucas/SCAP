@@ -34,8 +34,13 @@ class EditLine extends Component
     public $falCod;
     public $causaAparente;
     public $componente;
+    public $processo;
+    public $sistema;
+    public $equipamento;
     public $turno;
     public $operador;
+    public $inicio;
+    public $fim;
 
     public function rules()
     {
@@ -84,14 +89,24 @@ class EditLine extends Component
         $this->falCod = $parada->CodigoFalha;
         $this->causaAparente = $parada->CausaAparente;
         $this->componente = $parada->Componente;
+        $this->processo = $parada->Producao;
+        $this->sistema = $parada->Sistema;
+        $this->equipamento = $parada->Equipamento;
         $this->turno = $parada->Turno;
         $this->operador = $parada->Operador;
+        $this->inicio = Carbon::parse($parada->DataInicio)->format('Y-m-d\TH:i');
+        $this->fim = $parada->DataFim ? Carbon::parse($parada->DataFim)->format('Y-m-d\TH:i') : null;
         $this->apropriador = $parada->Apropriador;
     }
 
     public function render()
     {
         return view('livewire.components.parada.edit-line');
+    }
+
+    public function updatedProcesso()
+    {
+        $this->sistema = null;
     }
 
     public function updatedTipCod()
