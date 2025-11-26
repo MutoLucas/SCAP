@@ -123,17 +123,17 @@ class EditLine extends Component
     {
         $this->causaAparente = null;
     }
-
+    
     #[Computed]
     public function equipamentos()
     {
-        return Equipamento::get()->all();
+        return Equipamento::orderBy('Equipamento','asc')->get();
     }
 
     #[Computed]
     public function tipoCodigos()
     {
-        return TipoCodigo::get()->all();
+        return TipoCodigo::orderBy('Tipo de Código','asc')->get();
     }
 
     #[Computed]
@@ -145,7 +145,7 @@ class EditLine extends Component
             $query->where('Tipo de Código',$this->tipCod);
         }
 
-        return $query->get()->all();
+        return $query->orderBy('Tipo de Código','asc')->get();;
     }
 
     #[Computed]
@@ -157,7 +157,7 @@ class EditLine extends Component
             $query->where('Grupo de Código',$this->grupCod);
         }
 
-        return $query->get()->all();
+        return $query->orderBy('Código das Falhas','asc')->get();
     }
 
     #[Computed]
@@ -169,13 +169,13 @@ class EditLine extends Component
             $query->where('CodigoFalha',$this->falCod);
         }
 
-        return $query->get()->all();
+        return $query->orderBy('CausaAparente','asc')->get();
     }
 
     #[Computed]
     public function componentes()
     {
-        return Componente::get()->all();
+        return Componente::orderBy('Componente','asc')->get();
     }
 
     #[Computed]
@@ -183,7 +183,7 @@ class EditLine extends Component
     {
         $query = Processo::query();
 
-        return $query->get()->all();
+        return $query->orderBy('Processo','asc')->get();
     }
 
     #[Computed]
@@ -195,7 +195,7 @@ class EditLine extends Component
             $query->where('Processo',$this->processo);
         }
 
-        return $query->get()->all();
+        return $query->orderBy('Sistema','asc')->get();
     }
 
     #[Computed]
@@ -203,7 +203,7 @@ class EditLine extends Component
     {
         $query = Turno::query();
 
-        return $query->get()->all();
+        return $query->orderBy('Turno','asc')->get();
     }
 
     #[Computed]
