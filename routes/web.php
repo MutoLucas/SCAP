@@ -18,7 +18,8 @@ Route::post('/logout',[AuthController::class,'logout'])->name('login.logout');
 Route::get('/', [LobbyController::class,'lobbyIndex'])->name('lobby');
 
 Route::get('/copyline/{lineId}',[LobbyController::class,'viewCopyLine'])->name('copyLine.index')->middleware(VerifyAuth::class);
-Route::get('editline/{lineId}',[LobbyController::class,'viewEditLine'])->name('editLine.index');
+Route::get('/editline/{lineId}',[LobbyController::class,'viewEditLine'])->name('editLine.index');
+Route::get('/newline',[LobbyController::class,'viewNewLine'])->name('newLine.index')->middleware(VerifyAuth::class);;
 
 Route::prefix('/users')->middleware(VerifyAuth::class)->group(function (){
     Route::get('/lobby',[UserController::class,'showIndex'])->name('users.index');

@@ -128,11 +128,17 @@
                     <input wire:model.lazy="filterId" type="text" class="form-control form-control-sm" placeholder="Ex: 2142578">
                 </div>
 
-                <button class="btn btn-outline-warning" wire:click="refreshFilters">
+                @if(auth()->check())
+                <a href="{{ route('newLine.index') }}" class="btn btn-outline-primary">
+                    <i class="bi bi-plus-lg"></i>
+                </a>
+                @endif
+
+                <button type="button" class="btn btn-outline-warning" wire:click="refreshFilters">
                     <i class="bi bi-arrow-clockwise"></i>
                 </button>
 
-                <button class="btn btn-outline-success" wire:click="exportToExcel">
+                <button type="button" class="btn btn-outline-success" wire:click="exportToExcel">
                     <i class="bi bi-file-earmark-spreadsheet-fill" wire:loading.class="visually-hidden"></i>
                     <div class="spinner-grow text-success" role="status" wire:loading>
                         <span class="visually-hidden">Loading...</span>

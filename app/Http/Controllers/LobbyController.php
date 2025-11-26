@@ -20,4 +20,9 @@ class LobbyController extends Controller
     {
         return view('edit-line',['lineId'=>$lineId]);
     }
+
+    public function viewNewLine()
+    {
+        return view('new_line');
+    }
 }
