@@ -3,8 +3,9 @@
 namespace App\Livewire\Components\Addable\FalCod;
 
 use Livewire\Component;
-use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
+use Livewire\Attributes\Computed;
 
 use App\Models\CodigoFalha as CF;
 use App\Models\GrupoCodigo as GC;
@@ -21,6 +22,7 @@ class MainTable extends Component
         return view('livewire.components.addable.fal-cod.main-table');
     }
 
+    #[On('cod-created')]
     #[Computed]
     public function falCods()
     {

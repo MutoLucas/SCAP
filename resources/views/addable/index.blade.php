@@ -20,8 +20,6 @@
 
                         <div class="container">
 
-                            <livewire:components.addable.fal-cod.form-create/>
-
                             <livewire:components.addable.fal-cod.main-table/>
 
                         </div>
