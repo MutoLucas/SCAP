@@ -18,7 +18,10 @@
                         <li class="nav-item">
                             <a class="nav-link active text-white" aria-current="page"
                                 href="{{ route('users.index') }}">Usuarios</a>
-                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active text-white" aria-current="page"
+                                href="{{ route('addable.index') }}">Acrescentaveis</a>
                     @endif
                     <li class="nav-item">
                         <a class="nav-link active text-white" aria-current="page"
