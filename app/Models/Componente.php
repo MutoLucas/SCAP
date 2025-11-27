@@ -8,4 +8,9 @@ class Componente extends Model
 {
     protected $table = 'tbl_Componente';
     public $timestamps = false;
+
+    protected $fillable = [
+        'Grupo de Equipamentos',
+        'Componente'
+    ];
 }
