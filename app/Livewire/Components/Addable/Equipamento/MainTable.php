@@ -5,6 +5,7 @@ namespace App\Livewire\Components\Addable\Equipamento;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 
 use App\Models\Sistema;
 use App\Models\Processo;
@@ -49,6 +50,7 @@ class MainTable extends Component
         return $query->orderBy('Grupo de Equipamentos','asc')->get();
     }
 
+    #[On('equipamento-created')]
     #[Computed]
     public function equipaments()
     {
