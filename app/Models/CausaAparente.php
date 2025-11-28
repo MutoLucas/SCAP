@@ -8,7 +8,7 @@ class CausaAparente extends Model
 {
     protected $table = 'tbl_CausaAparente';
     public $timestamps = false;
-    public $primarykey = 'Id';
+    public $primaryKey = 'Id';
 
     protected $fillable = [
         'CodigoFalha',

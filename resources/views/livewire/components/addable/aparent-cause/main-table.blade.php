@@ -46,9 +46,7 @@
                                 <td>{{ $aparentCause->CodigoFalha }}</td>
                                 <td>{{ $aparentCause->CausaAparente }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-info-circle"></i>
-                                    </button>
+                                    <livewire:components.addable.aparent-cause.modal-edit wire:key="{{ $aparentCause->Id }}" :causeId="$aparentCause->Id" />
                                 </td>
                             </tr>
                         @endforeach

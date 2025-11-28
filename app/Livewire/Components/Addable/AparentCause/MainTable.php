@@ -30,7 +30,7 @@ class MainTable extends Component
         return $query->orderBy('Código das Falhas','asc')->get();
     }
 
-    #[On('cause-created')]
+    #[On(['cause-created','cause-updated'])]
     #[Computed]
     public function aparentCauses()
     {
