@@ -19,7 +19,7 @@
                 <span class="input-group-text bg-success text-white fw-bold">
                     Nome
                 </span>
-                <input type="text" class="form-control border-success" placeholder="Nome do Código" wire:model="name">
+                <input type="text" class="form-control border-success" placeholder="Nome do Componente" wire:model="name">
             </div>
             @error('name')
                 <small class="text-danger fw-bold">{{ $message }}</small>
