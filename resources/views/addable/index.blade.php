@@ -66,6 +66,25 @@
                 </div>
             </div>
 
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseFour">
+                        Causas Aparentes
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
+
+                    <div class="accordion-body">
+
+                        <livewire:components.addable.aparent-cause.main-table/>
+
+                    </div>
+
+                </div>
+            </div>
+
         </div>
 
     </div>
