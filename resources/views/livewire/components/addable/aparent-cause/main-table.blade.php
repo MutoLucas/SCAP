@@ -2,7 +2,7 @@
 
     <div class="container shadow-lg mt-4 p-3">
 
-        {{-- <livewire:components.addable.equipamento.form-create /> --}}
+        <livewire:components.addable.aparent-cause.form-create />
 
         <div class="d-flex justify-content-between align-items-end p-2 text-success">
             <div>

@@ -3,6 +3,7 @@
 namespace App\Livewire\Components\Addable\AparentCause;
 
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use Livewire\Attributes\Computed;
 
@@ -29,6 +30,7 @@ class MainTable extends Component
         return $query->orderBy('Código das Falhas','asc')->get();
     }
 
+    #[On('cause-created')]
     #[Computed]
     public function aparentCauses()
     {
