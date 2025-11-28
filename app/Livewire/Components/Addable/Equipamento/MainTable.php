@@ -50,7 +50,7 @@ class MainTable extends Component
         return $query->orderBy('Grupo de Equipamentos','asc')->get();
     }
 
-    #[On('equipamento-created')]
+    #[On(['equipamento-created','equipament-updated'])]
     #[Computed]
     public function equipaments()
     {

@@ -64,9 +64,7 @@
                                 <td>{{ $equipament->Equipamento }}</td>
                                 <td>{{ $equipament['Grupo de Equipamentos'] }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-info-circle"></i>
-                                    </button>
+                                    <livewire:components.addable.equipamento.modal-edit wire:key="{{ $equipament->id }}" :equipamentId="$equipament->id" />
                                 </td>
                             </tr>
                         @endforeach
