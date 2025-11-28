@@ -66,7 +66,7 @@ class ModalEdit extends Component
         $this->validate();
 
         if($this->verifyFalCodExists()){
-            return $this->message = [
+            return $this->message[$this->falCodId] = [
                 'message'=>'Código de Falha com este nome e grupo ja registrado',
                 'severity'=>'danger',
                 'icon'=>'bi bi-x-circle'
@@ -77,7 +77,7 @@ class ModalEdit extends Component
         $this->fal['Grupo de Código'] = $this->group;
         $this->fal->save();
 
-        $this->message = [
+        $this->message[$this->falCodId] = [
             'message'=>'Alteração registrada com sucesso',
             'severity'=>'success',
             'icon'=>'bi bi-check-circle'

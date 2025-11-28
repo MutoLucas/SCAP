@@ -24,14 +24,14 @@
                     </span>
 
 
-                    @if (isset($message['message']))
-                        <div class="alert alert-{{ $message['severity'] }} alert-dismissible fade show"
+                    @if (isset($message[$falCodId]['message']))
+                        <div class="alert alert-{{ $message[$falCodId]['severity'] }} alert-dismissible fade show"
                             role="alert">
                             <strong>
-                                @if (isset($message['icon']))
-                                    <i class="{{ $message['icon'] }}"></i>
+                                @if (isset($message[$falCodId]['icon']))
+                                    <i class="{{ $message[$falCodId]['icon'] }}"></i>
                                 @endif
-                                {{ $message['message'] }}
+                                {{ $message[$falCodId]['message'] }}
                             </strong>
                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                 aria-label="Close"></button>

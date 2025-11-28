@@ -66,7 +66,7 @@ class ModalEdit extends Component
         $this->validate();
 
         if($this->verifyExistsComp()){
-            return $this->message = [
+            return $this->message[$this->compId] = [
                 'message'=>'Componente com este grupo ja registrado',
                 'severity'=>'danger',
                 'icon'=>'bi bi-x-circle'
