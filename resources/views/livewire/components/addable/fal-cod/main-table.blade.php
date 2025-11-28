@@ -43,13 +43,11 @@
 
                     <tbody class="table-success">
                         @foreach ($this->falCods as $fal)
-                            <tr wire:key="{{ $fal->Id }}">
+                            <tr wire:key="{{ $fal->id }}">
                                 <td>{{ $fal['Grupo de Código'] }}</td>
                                 <td>{{ $fal['Código das Falhas'] }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-info-circle"></i>
-                                    </button>
+                                    <livewire:components.addable.fal-cod.modal-edit wire:key="{{ $fal->id }}" :falCodId="$fal->id" />
                                 </td>
                             </tr>
                         @endforeach

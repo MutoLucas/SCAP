@@ -22,7 +22,7 @@ class MainTable extends Component
         return view('livewire.components.addable.fal-cod.main-table');
     }
 
-    #[On('cod-created')]
+    #[On(['cod-created','fal-updated'])]
     #[Computed]
     public function falCods()
     {
