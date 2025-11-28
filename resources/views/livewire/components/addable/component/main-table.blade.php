@@ -46,9 +46,7 @@
                                 <td>{{ $component['Grupo de Equipamentos'] }}</td>
                                 <td>{{ $component['Componente'] }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-info-circle"></i>
-                                    </button>
+                                    <livewire:components.addable.component.modal-edit wire:key="{{ $component->id }}" :compId="$component->id"/>
                                 </td>
                             </tr>
                         @endforeach

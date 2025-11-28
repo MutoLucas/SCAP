@@ -30,7 +30,7 @@ class MainTable extends Component
         return $query->orderBy('Grupo de Equipamentos','asc')->get();
     }
 
-    #[On('componente-created')]
+    #[On(['componente-created','comp-updated'])]
     #[Computed]
     public function components()
     {
