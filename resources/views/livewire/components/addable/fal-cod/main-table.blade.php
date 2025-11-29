@@ -46,8 +46,14 @@
                             <tr wire:key="{{ $fal->id }}">
                                 <td>{{ $fal['Grupo de Código'] }}</td>
                                 <td>{{ $fal['Código das Falhas'] }}</td>
-                                <td>
-                                    <livewire:components.addable.fal-cod.modal-edit wire:key="{{ $fal->id }}" :falCodId="$fal->id" />
+                                <td class="d-flex justify-content-center gap-1">
+                                    <livewire:components.addable.fal-cod.modal-edit wire:key="{{ $fal->id }}"
+                                        :falCodId="$fal->id" />
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteFalCod" wire:key="{{ $fal->id }}"
+                                        wire:click="selectFalCod({{ $fal->id }})">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -66,5 +72,62 @@
                 </div>
             </div>
         @endif
+    </div>
+
+    <div class="modal fade" id="deleteFalCod" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="deleteFalCod" aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i> Confirmar Exclusão
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    @if (isset($messageDelete['message']))
+                        <div class="alert alert-{{ $messageDelete['severity'] }} alert-dismissible fade show"
+                            role="alert">
+                            <strong>
+                                @if (isset($messageDelete['icon']))
+                                    <i class="{{ $messageDelete['icon'] }}"></i>
+                                @endif
+                                {{ $messageDelete['message'] }}
+                            </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if ($falCodSelected)
+                        <p class="mb-0 fs-6">
+                            Tem certeza que deseja deletar o Código de Falha:
+                        </p>
+                        <div class="mt-3 p-3 bg-light rounded border">
+                            <div class="text-center">
+                                <strong>{{ $falCodSelected['Código das Falhas'] }}</strong><br>
+                                <span class="text-muted">{{ $falCodSelected['Grupo de Código'] }}</span>
+                            </div>
+                        </div>
+                        <p class="text-danger mt-3 mb-0 fw-semibold">Esta ação não poderá ser desfeita.</p>
+                    @endif
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg me-1"></i> Cancelar
+                    </button>
+
+                    <button type="button" class="btn btn-danger" wire:click="deleteFalCod">
+                        <i class="bi bi-trash-fill me-1"></i> Deletar
+                    </button>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>

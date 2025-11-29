@@ -14,6 +14,9 @@ class MainTable extends Component
 {
     use WithPagination;
 
+    public $messageDelete = [];
+    public $falCodSelected;
+
     public $filterGroup;
     public $filterName;
 
@@ -50,5 +53,36 @@ class MainTable extends Component
     public function resetSearch()
     {
         $this->reset();
+    }
+
+    public function selectFalCod($id)
+    {
+        if(!$this->getFalCod($id)){
+            return $this->messageDelete = [
+                'message'=>'Erro ao tentar encontrar Código de Falha',
+                'severity'=>'danger',
+                'icon'=>'bi bi-x-circle',
+            ];
+        }
+
+        $this->falCodSelected = $this->getFalCod($id);
+    }
+
+    public function deleteFalCod()
+    {
+        $falCodDeleted = $this->falCodSelected['Código das Falhas'];
+        $this->falCodSelected->delete();
+        $this->falCodSelected = null;
+
+        $this->messageDelete = [
+            'message'=>'Código de Falha: '.$falCodDeleted.' deletada com sucesso',
+            'severity'=>'success',
+            'icon'=>'bi bi-check-circle',
+        ];
+    }
+
+    public function getFalCod($id)
+    {
+        return CF::find($id);
     }
 }

@@ -52,7 +52,7 @@
                                         :compId="$component->id" />
 
                                     <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteComponent"
+                                        data-bs-target="#deleteComponent" wire:key="{{ $component->id }}"
                                         wire:click="selectComponent({{ $component->id }})">
                                         <i class="bi bi-x-circle"></i>
                                     </button>

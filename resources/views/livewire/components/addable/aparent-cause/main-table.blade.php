@@ -52,7 +52,8 @@
                                         wire:key="{{ $aparentCause->Id }}" :causeId="$aparentCause->Id" />
 
                                     <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteCause" wire:click="selectCause({{ $aparentCause->Id }})">
+                                        wire:key="{{ $aparentCause->Id }}" data-bs-target="#deleteCause"
+                                        wire:click="selectCause({{ $aparentCause->Id }})">
                                         <i class="bi bi-x-circle"></i>
                                     </button>
                                 </td>

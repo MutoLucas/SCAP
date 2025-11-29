@@ -70,7 +70,7 @@
                                         wire:key="{{ $equipament->id }}" :equipamentId="$equipament->id" />
 
                                     <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteEquipament" wire:click="selectEquipament({{ $equipament->id }})">
+                                        data-bs-target="#deleteEquipament" wire:key="{{ $equipament->id }}" wire:click="selectEquipament({{ $equipament->id }})">
                                         <i class="bi bi-x-circle"></i>
                                     </button>
                                 </td>
