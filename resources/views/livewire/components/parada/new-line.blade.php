@@ -144,7 +144,7 @@
                 <div class="p-1">
                     <label class="form-label">Inicio</label>
                     <input type="datetime-local" class="form-control border-primary" wire:model.lazy="inicio">
-                    @error('Inicio')
+                    @error('inicio')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>

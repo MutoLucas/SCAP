@@ -41,19 +41,19 @@ class NewLine extends Component
     {
         return [
             'observacao'=>'max:1000',
-            'tagGerador'=>'required|exists:tbl_Equipamento,Equipamento',
-            'grupCod'=>'required|exists:tbl_GrupoDeCódigo,Grupo de Código',
-            'tipCod'=>'required|exists:tbl_TipoDeCódigo,Tipo de Código',
-            'falCod'=>'required|exists:tbl_CódigoDasFalhas,Código das Falhas',
+            'tagGerador'=>'nullable|exists:tbl_Equipamento,Equipamento',
+            'grupCod'=>'nullable|exists:tbl_GrupoDeCódigo,Grupo de Código',
+            'tipCod'=>'nullable|exists:tbl_TipoDeCódigo,Tipo de Código',
+            'falCod'=>'nullable|exists:tbl_CódigoDasFalhas,Código das Falhas',
             'causaAparente'=>'nullable|exists:tbl_CausaAparente,CausaAparente',
-            'componente'=>'required|exists:tbl_Componente,Componente',
+            'componente'=>'nullable|exists:tbl_Componente,Componente',
             'processo'=>'required|exists:tbl_Processos,Processo',
             'sistema'=>'required|exists:tbl_Sistemas,Sistema',
             'equipamento'=>'required|exists:tbl_Equipamento,Equipamento',
-            'turno'=>'required|exists:tbl_turno,Turno',
-            'operador'=>'required|exists:login,Login',
+            'turno'=>'nullable|exists:tbl_turno,Turno',
+            'operador'=>'nullable|exists:login,Login',
             'inicio'=>'required',
-            'fim'=>'required',
+            'fim'=>'nullable',
         ];
     }
 
@@ -213,7 +213,7 @@ class NewLine extends Component
         // dd($this->observacao,$this->tagGerador,$this->grupCod,$this->tipCod,$this->falCod,$this->causaAparente,$this->componente,$this->processo,$this->sistema,$this->equipamento,$this->turno,$this->operador,$this->inicio,$this->fim);
 
         $newInicio = Carbon::parse($this->inicio)->format('Y-m-d H:i:s');
-        $newFim = Carbon::parse($this->fim)->format('Y-m-d H:i:s');
+        $newFim = $this->fim ? Carbon::parse($this->fim)->format('Y-m-d H:i:s') : null;
 
         $newParada = Parada::create([
             'Producao'=>$this->processo,
@@ -221,7 +221,7 @@ class NewLine extends Component
             'Equipamento'=>$this->equipamento,
 
             'DataInicio'=>DB::raw("CONVERT(datetime, '{$newInicio}', 120)"),
-            'DataFim'=>DB::raw("CONVERT(datetime, '{$newFim}', 120)"),
+            'DataFim'=>$newFim ? DB::raw("CONVERT(datetime, '{$newFim}', 120)") : null,
 
             'EqpGerador'=>$this->tagGerador,
             'TipoCodigo'=>$this->tipCod,
