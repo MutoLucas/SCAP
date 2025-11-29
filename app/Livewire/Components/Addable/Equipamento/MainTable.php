@@ -7,6 +7,9 @@ use Livewire\WithPagination;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 
+use App\Exports\EquipamentoExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Models\Sistema;
 use App\Models\Processo;
 use App\Models\Equipamento;
@@ -15,6 +18,8 @@ use App\Models\GrupoEquipamento;
 class MainTable extends Component
 {
     use WithPagination;
+
+    public $message = [];
 
     public $messageDelete = [];
     public $equipamentSelected;
@@ -112,5 +117,42 @@ class MainTable extends Component
     public function getEquipament($id)
     {
         return Equipamento::find($id);
+    }
+
+    public function exportToExcel()
+    {
+        $query = Equipamento::query();
+
+        if($this->processo){
+            $query->where('Processo',$this->processo);
+        }
+
+        if($this->sistema){
+            $query->where('Sistema',$this->sistema);
+        }
+
+        if($this->group){
+            $query->where('Grupo de Equipamentos',$this->group);
+        }
+
+        if($this->name){
+            $query->where('Equipamento','like','%'.$this->name.'%');
+        }
+
+        if($query->count() > 2000){
+            return $this->message = [
+                'message'=>'Numero de linhas excedeu 2000, favor entrar em contato com admin para aumentar.',
+                'severity'=>'danger',
+                'icon'=>'bi bi-x-circle',
+            ];
+        }
+
+        $this->message = [
+            'message'=>'Documento .xlsx carregado com sucesso.',
+            'severity'=>'success',
+            'icon'=>'bi bi-check-circle',
+        ];
+
+        return Excel::download(new EquipamentoExport($query->orderBy('Equipamento','asc')->get()->toArray()),'equipamentos_'.now()->format('d_m_Y').'.xlsx');
     }
 }

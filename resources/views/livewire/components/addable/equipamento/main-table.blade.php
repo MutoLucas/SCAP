@@ -4,6 +4,13 @@
 
         <livewire:components.addable.equipamento.form-create />
 
+        @if (isset($message['message']))
+            <div class="alert alert-{{ $message['severity'] }} alert-dismissible fade show" role="alert">
+                <strong><i class="{{ $message['icon'] }}"></i> {{ $message['message'] }}</strong>.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
         <div class="d-flex justify-content-between align-items-end p-2 text-success">
             <div>
                 <i class="bi bi-clock"></i> Tabela de Equipamentos
@@ -41,6 +48,12 @@
                     <button class="btn btn-sm btn-outline-warning" wire:click="resetSearch">
                         <i class="bi bi-arrow-clockwise"></i>
                     </button>
+
+                    <button type="button" class="btn btn-outline-success" wire:click="exportToExcel">
+                        <i class="bi bi-file-earmark-spreadsheet-fill" wire:loading.class="visually-hidden"></i>
+                        <div class="spinner-grow spinner-grow-sm text-success" role="status" wire:loading>
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -70,7 +83,8 @@
                                         wire:key="{{ $equipament->id }}" :equipamentId="$equipament->id" />
 
                                     <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteEquipament" wire:key="{{ $equipament->id }}" wire:click="selectEquipament({{ $equipament->id }})">
+                                        data-bs-target="#deleteEquipament" wire:key="{{ $equipament->id }}"
+                                        wire:click="selectEquipament({{ $equipament->id }})">
                                         <i class="bi bi-x-circle"></i>
                                     </button>
                                 </td>
