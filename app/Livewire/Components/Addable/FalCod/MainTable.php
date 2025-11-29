@@ -7,12 +7,17 @@ use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use Livewire\Attributes\Computed;
 
+use App\Exports\CodigoFalhaExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Models\CodigoFalha as CF;
 use App\Models\GrupoCodigo as GC;
 
 class MainTable extends Component
 {
     use WithPagination;
+
+    public $message = [];
 
     public $messageDelete = [];
     public $falCodSelected;
@@ -84,5 +89,34 @@ class MainTable extends Component
     public function getFalCod($id)
     {
         return CF::find($id);
+    }
+
+    public function exportToExcel()
+    {
+        $query = CF::query();
+
+        if($this->filterGroup){
+            $query->where('Grupo de Código',$this->filterGroup);
+        }
+
+        if($this->filterName){
+            $query->where('Código das Falhas','like','%'.$this->filterName.'%');
+        }
+
+        if($query->count() > 2000){
+            return $this->message = [
+                'message'=>'Numero de linhas excedeu 2000, favor entrar em contato com admin para aumentar.',
+                'severity'=>'danger',
+                'icon'=>'bi bi-x-circle',
+            ];
+        }
+
+        $this->message = [
+            'message'=>'Documento .xlsx carregado com sucesso.',
+            'severity'=>'success',
+            'icon'=>'bi bi-check-circle',
+        ];
+        
+        return Excel::download(new CodigoFalhaExport($query->orderBy('Código das Falhas')->get()->toArray()), 'teste.xlsx');
     }
 }
