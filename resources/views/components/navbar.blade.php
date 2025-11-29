@@ -14,19 +14,18 @@
                 </li>
 
                 @if (auth()->check())
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" aria-current="page"
+                            href="{{ route('shift.index') }}">Ocorrência de Turnos</a>
+                    </li>
                     @if (auth()->user()->NivelAcesso == 'Administrador')
                         <li class="nav-item">
                             <a class="nav-link active text-white" aria-current="page"
-                                href="{{ route('users.index') }}">Usuarios</a>
-
+                                href="{{ route('addable.index') }}">Configurações</a>
                         <li class="nav-item">
                             <a class="nav-link active text-white" aria-current="page"
-                                href="{{ route('addable.index') }}">Acrescentaveis</a>
+                                href="{{ route('users.index') }}">Usuarios</a>
                     @endif
-                    <li class="nav-item">
-                        <a class="nav-link active text-white" aria-current="page"
-                            href="{{ route('shift.index') }}">Turnos de Ocorrência</a>
-                    </li>
                 @endif
             </ul>
         </div>

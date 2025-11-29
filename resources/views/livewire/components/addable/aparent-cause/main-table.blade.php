@@ -16,11 +16,13 @@
                     <select class="form-select form-select-sm" wire:model.lazy="filterFalCod">
                         <option value="">Codigo Falha...</option>
                         @foreach ($this->falCods as $falCod)
-                            <option value="{{ $falCod['Código das Falhas'] }}">{{ $falCod['Código das Falhas'] }}</option>
+                            <option value="{{ $falCod['Código das Falhas'] }}">{{ $falCod['Código das Falhas'] }}
+                            </option>
                         @endforeach
                     </select>
 
-                    <input type="text" class="form-control form-control-sm" placeholder="Causa Aparente..." wire:model.lazy="filterName">
+                    <input type="text" class="form-control form-control-sm" placeholder="Causa Aparente..."
+                        wire:model.lazy="filterName">
 
                     <button class="btn btn-sm btn-outline-warning" wire:click="resetSearch">
                         <i class="bi bi-arrow-clockwise"></i>
@@ -45,8 +47,14 @@
                             <tr wire:key="{{ $aparentCause->Id }}">
                                 <td>{{ $aparentCause->CodigoFalha }}</td>
                                 <td>{{ $aparentCause->CausaAparente }}</td>
-                                <td>
-                                    <livewire:components.addable.aparent-cause.modal-edit wire:key="{{ $aparentCause->Id }}" :causeId="$aparentCause->Id" />
+                                <td class="d-flex justify-content-center gap-2">
+                                    <livewire:components.addable.aparent-cause.modal-edit
+                                        wire:key="{{ $aparentCause->Id }}" :causeId="$aparentCause->Id" />
+
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteCause" wire:click="selectCause({{ $aparentCause->Id }})">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -66,4 +74,62 @@
             </div>
         @endif
     </div>
+
+    <div class="modal fade" id="deleteCause" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="deleteCause" aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i> Confirmar Exclusão
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    @if (isset($messageDelete['message']))
+                        <div class="alert alert-{{ $messageDelete['severity'] }} alert-dismissible fade show"
+                            role="alert">
+                            <strong>
+                                @if (isset($messageDelete['icon']))
+                                    <i class="{{ $messageDelete['icon'] }}"></i>
+                                @endif
+                                {{ $messageDelete['message'] }}
+                            </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if ($causeSelected)
+                        <p class="mb-0 fs-6">
+                            Tem certeza que deseja deletar a Causa Aparente:
+                        </p>
+                        <div class="mt-3 p-3 bg-light rounded border">
+                            <div class="text-center">
+                                <strong>{{ $causeSelected->CausaAparente }}</strong><br>
+                                <span class="text-muted">{{ $causeSelected->CodigoFalha }}</span>
+                            </div>
+                        </div>
+                        <p class="text-danger mt-3 mb-0 fw-semibold">Esta ação não poderá ser desfeita.</p>
+                    @endif
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg me-1"></i> Cancelar
+                    </button>
+
+                    <button type="button" class="btn btn-danger" wire:click="deleteCause">
+                        <i class="bi bi-trash-fill me-1"></i> Deletar
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </div>

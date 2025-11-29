@@ -17,6 +17,9 @@ class MainTable extends Component
     public $filterFalCod;
     public $filterName;
 
+    public $messageDelete = [];
+    public $causeSelected;
+
     public function render()
     {
         return view('livewire.components.addable.aparent-cause.main-table');
@@ -50,5 +53,37 @@ class MainTable extends Component
     public function resetSearch()
     {
         $this->reset();
+    }
+
+    public function selectCause($id)
+    {
+        if(!$this->getCause($id)){
+            return $this->messageDelete = [
+                'message'=>'Erro ao tentar encontrar Causa Aparente',
+                'severity'=>'danger',
+                'icon'=>'bi bi-x-circle',
+            ];
+        }
+
+        $this->causeSelected = $this->getCause($id);
+    }
+
+    public function deleteCause()
+    {
+        $causeDeleted = $this->causeSelected->CausaAparente;
+        $this->causeSelected->delete();
+
+        $this->messageDelete = [
+            'message'=>'Causa Aparente: '.$causeDeleted.' deleteada com sucesso',
+            'severity'=>'success',
+            'icon'=>'bi bi-check-circle',
+        ];
+
+        $this->causeSelected = null;
+    }
+
+    public function getCause($id)
+    {
+        return CausaAparente::find($id);
     }
 }
