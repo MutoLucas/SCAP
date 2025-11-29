@@ -252,7 +252,7 @@ class MainTable extends Component
             ];
         }
 
-        return Excel::download(new ParadasExport($query->orderBy('DataInicio','desc')->get()->toArray()),'paradas_'.now()->format('d-m-Y').'.xlsx');
+        return Excel::download(new ParadasExport($query->orderBy('DataInicio','desc')->get()->toArray()),'paradas_'.now()->format('d_m_Y').'.xlsx');
     }
 
     public function refreshFilters()

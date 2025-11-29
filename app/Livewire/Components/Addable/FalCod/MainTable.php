@@ -116,7 +116,7 @@ class MainTable extends Component
             'severity'=>'success',
             'icon'=>'bi bi-check-circle',
         ];
-        
-        return Excel::download(new CodigoFalhaExport($query->orderBy('Código das Falhas')->get()->toArray()), 'teste.xlsx');
+
+        return Excel::download(new CodigoFalhaExport($query->orderBy('Código das Falhas')->get()->toArray()), 'codigos_de_falhas_'.now()->format('d_m_Y').'.xlsx');
     }
 }
