@@ -7,12 +7,17 @@ use Livewire\WithPagination;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Computed;
 
+use App\Exports\ComponenteExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Models\Componente;
 use App\Models\GrupoEquipamento as GE;
 
 class MainTable extends Component
 {
     use WithPagination;
+
+    public $message = [];
 
     public $messageDelete = [];
     public $componentSelected;
@@ -47,7 +52,7 @@ class MainTable extends Component
             $query->where('Componente','like','%'.$this->filterName.'%');
         }
 
-            return $query->orderBy('Componente','asc')->paginate(6,'*','components');
+        return $query->orderBy('Componente','asc')->paginate(6,'*','components');
     }
 
     public function resetSearch()
@@ -84,5 +89,34 @@ class MainTable extends Component
     public function getComponent($id)
     {
         return Componente::find($id);
+    }
+
+    public function exportToExcel()
+    {
+        $query = Componente::query();
+
+        if($this->filterGroup){
+            $query->where('Grupo de Equipamentos',$this->filterGroup);
+        }
+
+        if($this->filterName){
+            $query->where('Componente','like','%'.$this->filterName.'%');
+        }
+
+        if($query->count() > 2000){
+            return $this->message = [
+                'message'=>'Numero de linhas excedeu 2000, favor entrar em contato com admin para aumentar.',
+                'severity'=>'danger',
+                'icon'=>'bi bi-x-circle',
+            ];
+        }
+
+        $this->message = [
+            'message'=>'Documento.xlsx exportado com sucesso',
+            'severity'=>'success',
+            'icon'=>'bi bi-check-circle',
+        ];
+
+        return Excel::download(new ComponenteExport($query->orderBy('Componente','asc')->get()->toArray()),'componentes_'.now()->format('d_m_Y').'.xlsx');
     }
 }
