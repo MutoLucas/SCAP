@@ -14,6 +14,9 @@ class MainTable extends Component
 {
     use WithPagination;
 
+    public $messageDelete = [];
+    public $componentSelected;
+
     public $filterGroup;
     public $filterName;
 
@@ -50,5 +53,36 @@ class MainTable extends Component
     public function resetSearch()
     {
         $this->reset();
+    }
+
+    public function selectComponent($id)
+    {
+        if(!$this->getComponent($id)){
+            $this->messageDelete = [
+                'message'=>'Erro ao tentar encontrar componente',
+                'severity'=>'danger',
+                'icon'=>'bi bi-x-cirlce'
+            ];
+        }
+
+        $this->componentSelected = $this->getComponent($id);
+    }
+
+    public function deleteComponent()
+    {
+        $componentDeleted = $this->componentSelected->Componente;
+        $this->componentSelected->delete();
+        $this->componentSelected = null;
+
+        $this->messageDelete = [
+            'message'=>'Componente: '.$componentDeleted.' deletado com sucesso',
+            'severity'=>'success',
+            'icon'=>'bi bi-check-cirlce'
+        ];
+    }
+
+    public function getComponent($id)
+    {
+        return Componente::find($id);
     }
 }
