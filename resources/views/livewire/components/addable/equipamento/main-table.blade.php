@@ -16,25 +16,27 @@
                     <select class="form-select form-select-sm" wire:model.lazy="processo">
                         <option value="">Processo...</option>
                         @foreach ($this->processos as $key)
-                        <option value="{{ $key->Processo }}">{{ $key->Processo }}</option>
+                            <option value="{{ $key->Processo }}">{{ $key->Processo }}</option>
                         @endforeach
                     </select>
 
                     <select class="form-select form-select-sm" wire:model.lazy="sistema">
                         <option value="">Sistema...</option>
                         @foreach ($this->sistemas as $key)
-                        <option value="{{ $key->Sistema }}">{{ $key->Sistema }}</option>
+                            <option value="{{ $key->Sistema }}">{{ $key->Sistema }}</option>
                         @endforeach
                     </select>
 
                     <select class="form-select form-select-sm" wire:model.lazy="group">
                         <option value="">Grupo Equipamento...</option>
                         @foreach ($this->groupEquips as $key)
-                        <option value="{{ $key['Grupo de Equipamentos'] }}">{{ $key['Grupo de Equipamentos'] }}</option>
+                            <option value="{{ $key['Grupo de Equipamentos'] }}">{{ $key['Grupo de Equipamentos'] }}
+                            </option>
                         @endforeach
                     </select>
 
-                    <input type="text" class="form-control form-control-sm" placeholder="Equipamento..." wire:model.lazy="name">
+                    <input type="text" class="form-control form-control-sm" placeholder="Equipamento..."
+                        wire:model.lazy="name">
 
                     <button class="btn btn-sm btn-outline-warning" wire:click="resetSearch">
                         <i class="bi bi-arrow-clockwise"></i>
@@ -63,8 +65,14 @@
                                 <td>{{ $equipament->Sistema }}</td>
                                 <td>{{ $equipament->Equipamento }}</td>
                                 <td>{{ $equipament['Grupo de Equipamentos'] }}</td>
-                                <td>
-                                    <livewire:components.addable.equipamento.modal-edit wire:key="{{ $equipament->id }}" :equipamentId="$equipament->id" />
+                                <td class="d-flex justify-content-center gap-2">
+                                    <livewire:components.addable.equipamento.modal-edit
+                                        wire:key="{{ $equipament->id }}" :equipamentId="$equipament->id" />
+
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteEquipament" wire:click="selectEquipament({{ $equipament->id }})">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -83,5 +91,64 @@
                 </div>
             </div>
         @endif
+    </div>
+
+    <div class="modal fade" id="deleteEquipament" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="deleteEquipament" aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i> Confirmar Exclusão
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    @if (isset($messageDelete['message']))
+                        <div class="alert alert-{{ $messageDelete['severity'] }} alert-dismissible fade show"
+                            role="alert">
+                            <strong>
+                                @if (isset($messageDelete['icon']))
+                                    <i class="{{ $messageDelete['icon'] }}"></i>
+                                @endif
+                                {{ $messageDelete['message'] }}
+                            </strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+
+                    @if ($equipamentSelected)
+                        <p class="mb-0 fs-6">
+                            Tem certeza que deseja deletar o Equipamento:
+                        </p>
+                        <div class="mt-3 p-3 bg-light rounded border">
+                            <div class="text-center">
+                                <strong>{{ $equipamentSelected->Equipamento }}</strong><br>
+                                <span class="text-muted">{{ $equipamentSelected->Processo }} | </span>
+                                <span class="text-muted">{{ $equipamentSelected->Sistema }} | </span>
+                                <span class="text-muted">{{ $equipamentSelected['Grupo de Equipamentos'] }}</span>
+                            </div>
+                        </div>
+                        <p class="text-danger mt-3 mb-0 fw-semibold">Esta ação não poderá ser desfeita.</p>
+                    @endif
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg me-1"></i> Cancelar
+                    </button>
+
+                    <button type="button" class="btn btn-danger" wire:click="deleteEquipament">
+                        <i class="bi bi-trash-fill me-1"></i> Deletar
+                    </button>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
