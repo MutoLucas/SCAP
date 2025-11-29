@@ -7,12 +7,17 @@ use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use Livewire\Attributes\Computed;
 
+use App\Exports\CausaAparenteExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Models\CodigoFalha;
 use App\Models\CausaAparente;
 
 class MainTable extends Component
 {
     use WithPagination;
+
+    public $message = [];
 
     public $filterFalCod;
     public $filterName;
@@ -85,5 +90,34 @@ class MainTable extends Component
     public function getCause($id)
     {
         return CausaAparente::find($id);
+    }
+
+    public function exportToExcel()
+    {
+        $query = CausaAparente::query();
+
+        if($this->filterFalCod){
+            $query->where('CodigoFalha',$this->filterFalCod);
+        }
+
+        if($this->filterName){
+            $query->where('CausaAparente','like','%'.$this->filterName.'%');
+        }
+
+        if($query->count() > 2000){
+            return $this->message = [
+                'message'=>'Numero de linhas excedeu 2000, favor entrar em contato com admin para aumentar.',
+                'severity'=>'danger',
+                'icon'=>'bi bi-x-circle',
+            ];
+        }
+
+        $this->message = [
+            'message'=>'Documento.xlsx exportado com sucesso',
+            'severity'=>'success',
+            'icon'=>'bi bi-check-circle',
+        ];
+
+        return Excel::download(new CausaAparenteExport($query->orderBy('CausaAparente','asc')->get()->toArray()),'causas_aparentes_'.now()->format('d_m_Y').'.xlsx');
     }
 }
