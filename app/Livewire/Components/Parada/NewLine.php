@@ -223,6 +223,7 @@ class NewLine extends Component
         $newFim = $this->fim ? Carbon::parse($this->fim)->format('Y-m-d H:i:s') : null;
 
         $tagGerador = $this->getTagGerador($this->tagGerador);
+
         $newParada = Parada::create([
             'Producao'=>$this->processo,
             'Sistema'=>$this->sistema,
@@ -231,7 +232,7 @@ class NewLine extends Component
             'DataInicio'=>DB::raw("CONVERT(datetime, '{$newInicio}', 120)"),
             'DataFim'=>$newFim ? DB::raw("CONVERT(datetime, '{$newFim}', 120)") : null,
 
-            'EqpGerador'=>$tagGerador->Equipamento,
+            'EqpGerador'=>$tagGerador->Equipamento ?? null,
             'TipoCodigo'=>$this->tipCod,
             'GrupoCodigo'=>$this->grupCod,
             'CodigoFalha'=>$this->falCod,
