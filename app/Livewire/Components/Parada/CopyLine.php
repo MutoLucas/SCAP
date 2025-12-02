@@ -44,7 +44,7 @@ class CopyLine extends Component
     {
         return [
             'observacao'=>'max:1000',
-            'tagGerador'=>'required|exists:tbl_Equipamento,Equipamento',
+            'tagGerador'=>'required|exists:tbl_Equipamento,id',
             'grupCod'=>'required|exists:tbl_GrupoDeCódigo,Grupo de Código',
             'tipCod'=>'required|exists:tbl_TipoDeCódigo,Tipo de Código',
             'falCod'=>'required|exists:tbl_CódigoDasFalhas,Código das Falhas',
@@ -94,7 +94,7 @@ class CopyLine extends Component
     {
         $parada = Parada::find($this->lineId);
         $this->observacao = $parada->Observacao;
-        $this->tagGerador = $parada->EqpGerador;
+        $this->tagGerador = $parada->tagGerador->id;
         $this->tipCod = $parada->TipoCodigo;
         $this->grupCod = $parada->GrupoCodigo;
         $this->falCod = $parada->CodigoFalha;
@@ -186,7 +186,14 @@ class CopyLine extends Component
     #[Computed]
     public function componentes()
     {
-        return Componente::orderBy('Componente','asc')->get();
+        $query = Componente::query();
+
+        if($this->tagGerador){
+            $gerador = $this->getTagGerador($this->tagGerador);
+            $query->where('Grupo de Equipamentos',$gerador['Grupo de Equipamentos']);
+        }
+
+        return $query->orderBy('Componente','asc')->get();
     }
 
     #[Computed]
@@ -234,6 +241,7 @@ class CopyLine extends Component
         $newInicio = Carbon::parse($this->inicio)->format('Y-m-d H:i:s');
         $newFim = Carbon::parse($this->fim)->format('Y-m-d H:i:s');
 
+        $tagGerador = $this->getTagGerador($this->tagGerador);
         $newParada = Parada::create([
             'Producao'=>$this->processo,
             'Sistema'=>$this->sistema,
@@ -242,7 +250,7 @@ class CopyLine extends Component
             'DataInicio'=>DB::raw("CONVERT(datetime, '{$newInicio}', 120)"),
             'DataFim'=>DB::raw("CONVERT(datetime, '{$newFim}', 120)"),
 
-            'EqpGerador'=>$this->tagGerador,
+            'EqpGerador'=>$tagGerador->Equipamento,
             'TipoCodigo'=>$this->tipCod,
             'GrupoCodigo'=>$this->grupCod,
             'CodigoFalha'=>$this->falCod,
@@ -257,5 +265,10 @@ class CopyLine extends Component
         $newParada->save();
 
         return redirect()->route('lobby')->with('successCreateLine','Linha: '.$newParada->Id.' criada com sucesso');
+    }
+
+    public function getTagGerador($tagGerador)
+    {
+        return Equipamento::where('id',$tagGerador)->first();
     }
 }

@@ -1,5 +1,5 @@
 <div class="container mt-4 p-2">
-
+    {{ $this->tagGerador }}
     <div class="w-full d-flex justify-around gap-3">
 
         <div class="border border-light-subtle rounded-2 w-50 p-3 shadow-lg">
@@ -12,10 +12,10 @@
 
                 <div class="p-1">
                     <label class="form-label">Tag Gerador</label>
-                    <select class="form-select form-select-sm  border-primary" wire:model="tagGerador" @disabled(!auth()->check())>
+                    <select class="form-select form-select-sm  border-primary" wire:model.lazy="tagGerador" @disabled(!auth()->check())>
                         <option value="">Selecione...</option>
                         @foreach ($this->equipamentos as $equipamento)
-                        <option value="{{ $equipamento->Equipamento }}">{{ $equipamento->Equipamento }}</option>
+                        <option value="{{ $equipamento->id }}">{{ $equipamento->Equipamento }}</option>
                         @endforeach
                     </select>
                     @error('tagGerador')

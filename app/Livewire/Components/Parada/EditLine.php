@@ -46,7 +46,7 @@ class EditLine extends Component
     {
         return [
             'observacao'=>'max:1000',
-            'tagGerador'=>'required|exists:tbl_Equipamento,Equipamento',
+            'tagGerador'=>'required|exists:tbl_Equipamento,id',
             'grupCod'=>'required|exists:tbl_GrupoDeCódigo,Grupo de Código',
             'tipCod'=>'required|exists:tbl_TipoDeCódigo,Tipo de Código',
             'falCod'=>'required|exists:tbl_CódigoDasFalhas,Código das Falhas',
@@ -83,7 +83,7 @@ class EditLine extends Component
     {
         $parada = Parada::find($this->lineId);
         $this->observacao = $parada->Observacao;
-        $this->tagGerador = $parada->EqpGerador;
+        $this->tagGerador = $parada->tagGerador->id;
         $this->tipCod = $parada->TipoCodigo;
         $this->grupCod = $parada->GrupoCodigo;
         $this->falCod = $parada->CodigoFalha;
@@ -123,7 +123,7 @@ class EditLine extends Component
     {
         $this->causaAparente = null;
     }
-    
+
     #[Computed]
     public function equipamentos()
     {
@@ -175,7 +175,14 @@ class EditLine extends Component
     #[Computed]
     public function componentes()
     {
-        return Componente::orderBy('Componente','asc')->get();
+        $query = Componente::query();
+
+        if($this->tagGerador){
+            $gerador = $this->getTagGerador($this->tagGerador);
+            $query->where('Grupo de Equipamentos',$gerador['Grupo de Equipamentos']);
+        }
+
+        return $query->orderBy('Componente','asc')->get();
     }
 
     #[Computed]
@@ -221,7 +228,9 @@ class EditLine extends Component
         $parada = $this->getParada($this->lineId);
         // dd($this->observacao,$this->tagGerador,$this->grupCod,$this->tipCod,$this->falCod,$this->causaAparente,$this->componente,$this->processo,$this->sistema,$this->equipamento,$this->turno,$this->operador,$this->inicio,$this->fim);
 
-        $parada->EqpGerador = $this->pull('tagGerador');
+
+        $tagGerador = $this->getTagGerador($this->tagGerador);
+        $parada->EqpGerador = $tagGerador->Equipamento;
         $parada->TipoCodigo = $this->pull('tipCod');
         $parada->GrupoCodigo = $this->pull('grupCod');
         $parada->CodigoFalha = $this->pull('falCod');
@@ -239,5 +248,10 @@ class EditLine extends Component
     public function getParada($lineId)
     {
         return Parada::find($lineId);
+    }
+
+    public function getTagGerador($tagGerador)
+    {
+        return Equipamento::where('id',$tagGerador)->first();
     }
 }

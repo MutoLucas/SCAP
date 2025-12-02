@@ -5,6 +5,9 @@ namespace App\Models;
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
+use App\Models\Equipamento;
 
 class Parada extends Model
 {
@@ -35,8 +38,6 @@ class Parada extends Model
         'NumeroParada'
     ];
 
-
-
     public function getDataInicialAttribute()
     {
         return Carbon::parse($this->DataInicio);
@@ -45,5 +46,10 @@ class Parada extends Model
     public function getDataFinalAttribute()
     {
         return Carbon::parse($this->DataFim);
+    }
+
+    public function tagGerador()
+    {
+        return $this->belongsTo(Equipamento::class,'EqpGerador','Equipamento');
     }
 }
