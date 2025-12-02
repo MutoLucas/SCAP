@@ -46,14 +46,14 @@ class EditLine extends Component
     {
         return [
             'observacao'=>'max:1000',
-            'tagGerador'=>'required|exists:tbl_Equipamento,id',
-            'grupCod'=>'required|exists:tbl_GrupoDeCódigo,Grupo de Código',
-            'tipCod'=>'required|exists:tbl_TipoDeCódigo,Tipo de Código',
-            'falCod'=>'required|exists:tbl_CódigoDasFalhas,Código das Falhas',
+            'tagGerador'=>'nullable|exists:tbl_Equipamento,id',
+            'grupCod'=>'nullable|exists:tbl_GrupoDeCódigo,Grupo de Código',
+            'tipCod'=>'nullable|exists:tbl_TipoDeCódigo,Tipo de Código',
+            'falCod'=>'nullable|exists:tbl_CódigoDasFalhas,Código das Falhas',
             'causaAparente'=>'nullable|exists:tbl_CausaAparente,CausaAparente',
-            'componente'=>'required|exists:tbl_Componente,Componente',
-            'turno'=>'required|exists:tbl_turno,Turno',
-            'operador'=>'required|exists:login,Login',
+            'componente'=>'nullable|exists:tbl_Componente,Componente',
+            'turno'=>'nullable|exists:tbl_turno,Turno',
+            'operador'=>'nullable|exists:login,Login',
         ];
     }
 
@@ -61,20 +61,21 @@ class EditLine extends Component
     {
         return [
             'observacao.max'=>'Maximo 1000 caracteres',
-            'tagGerador.required'=>'Necessario selecionar',
+
             'tagGerador.exists'=>'Erro ao procurar tagGerador',
-            'grupCod.required'=>'Necessario selecionar',
+
             'grupCod.exists'=>'Erro ao procurar Grupo de Código',
-            'tipCod.required'=>'Necessario selecionar',
+
             'tipCod.exists'=>'Erro ao procurar Tipo de Código',
-            'falCod.required'=>'Necessario selecionar',
+
             'falCod.exists'=>'Erro ao procurar Código da Falha',
+
             'causaAparente.exists'=>'Erro ao procurar Causa',
-            'componente.required'=>'Necessario selecionar',
+
             'componente.exists'=>'Erro ao procurar Componente',
-            'turno.required'=>'Necessario selecionar',
+
             'turno.exists'=>'Erro ao procurar Turno',
-            'operador.required'=>'Necessario selecionar',
+
             'operador.exists'=>'Erro ao procurar Operador',
         ];
     }
@@ -83,7 +84,7 @@ class EditLine extends Component
     {
         $parada = Parada::find($this->lineId);
         $this->observacao = $parada->Observacao;
-        $this->tagGerador = $parada->tagGerador->id;
+        $this->tagGerador = $parada->tagGerador->id ?? null;
         $this->tipCod = $parada->TipoCodigo;
         $this->grupCod = $parada->GrupoCodigo;
         $this->falCod = $parada->CodigoFalha;
@@ -229,8 +230,8 @@ class EditLine extends Component
         // dd($this->observacao,$this->tagGerador,$this->grupCod,$this->tipCod,$this->falCod,$this->causaAparente,$this->componente,$this->processo,$this->sistema,$this->equipamento,$this->turno,$this->operador,$this->inicio,$this->fim);
 
 
-        $tagGerador = $this->getTagGerador($this->tagGerador);
-        $parada->EqpGerador = $tagGerador->Equipamento;
+        $tagGerador = $this->getTagGerador($this->tagGerador) ?? null;
+        $parada->EqpGerador = $tagGerador->Equipamento ?? null;
         $parada->TipoCodigo = $this->pull('tipCod');
         $parada->GrupoCodigo = $this->pull('grupCod');
         $parada->CodigoFalha = $this->pull('falCod');
