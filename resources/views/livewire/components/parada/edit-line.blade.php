@@ -1,5 +1,5 @@
 <div class="container mt-4 p-2">
-    {{ $this->tagGerador }}
+
     <div class="w-full d-flex justify-around gap-3">
 
         <div class="border border-light-subtle rounded-2 w-50 p-3 shadow-lg">
