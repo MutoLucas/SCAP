@@ -13,6 +13,9 @@ class UserTable extends Component
 {
     use WithPagination;
 
+    public $messageDelete = [];
+    public $userSelected;
+
     public $filterName;
     public $filterLogin;
     public $filterRole;
@@ -89,5 +92,34 @@ class UserTable extends Component
     public function resetSearch()
     {
         $this->reset();
+    }
+
+    public function selectUser($login)
+    {
+        $this->userSelected = $this->getUser($login);
+    }
+
+    public function deleteUser()
+    {
+        if($this->userSelected){
+            $user = [
+                'nome'=>$this->userSelected->Nome,
+                'login'=>$this->userSelected->Login
+            ];
+
+            $this->userSelected->delete();
+            $this->userSelected = null;
+
+            $this->messageDelete = [
+                'message'=>'Usuário: '.$user['nome'].' - '.$user['login'].' deletado com sucesso',
+                'severity'=>'success',
+                'icon'=>'bi bi-check-circle',
+            ];
+        }
+    }
+
+    public function getUser($login)
+    {
+        return Login::find($login);
     }
 }
