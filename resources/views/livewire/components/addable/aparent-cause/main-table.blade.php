@@ -137,7 +137,7 @@
                         <i class="bi bi-x-lg me-1"></i> Cancelar
                     </button>
 
-                    <button type="button" class="btn btn-danger" wire:click="deleteCause">
+                    <button type="button" class="{{ $this->causeSelected ? '' : 'visually-hidden' }} btn btn-danger" wire:click="deleteCause">
                         <i class="bi bi-trash-fill me-1"></i> Deletar
                     </button>
                 </div>
