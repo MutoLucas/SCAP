@@ -213,7 +213,7 @@ class MainTable extends Component
     }
 
     public function editLine($lineId)
-    {
+    {   
         $parada = $this->getParada($lineId);
 
         if(!$parada){
