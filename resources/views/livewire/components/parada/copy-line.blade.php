@@ -151,7 +151,12 @@
 
                 <div class="p-1">
                     <label class="form-label">Fim</label>
-                    <input type="datetime-local" class="form-control border-primary" wire:model.lazy="fim">
+                    <div class="input-group">
+                        <input type="datetime-local" class="form-control border-primary" wire:model.lazy="fim">
+                        <button class="btn btn-sm btn-warning col-1" wire:click="cleanDataFim">
+                            <i class="bi bi-calendar2-x"></i>
+                        </button>
+                    </div>
                     @error('fim')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror

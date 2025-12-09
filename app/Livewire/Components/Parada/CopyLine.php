@@ -236,6 +236,11 @@ class CopyLine extends Component
         return $query->select('Nome','Login')->get()->all();
     }
 
+    public function cleanDataFim()
+    {
+        $this->fim = null;
+    }
+
     public function storeNewParada()
     {
         $this->validate();
@@ -243,16 +248,17 @@ class CopyLine extends Component
         // dd($this->observacao,$this->tagGerador,$this->grupCod,$this->tipCod,$this->falCod,$this->causaAparente,$this->componente,$this->processo,$this->sistema,$this->equipamento,$this->turno,$this->operador,$this->inicio,$this->fim);
 
         $newInicio = Carbon::parse($this->inicio)->format('Y-m-d H:i:s');
-        $newFim = Carbon::parse($this->fim)->format('Y-m-d H:i:s');
+        $newFim = $this->fim ? Carbon::parse($this->fim)->format('Y-m-d H:i:s') : null;
 
         $tagGerador = $this->getTagGerador($this->tagGerador);
+
         $newParada = Parada::create([
             'Producao'=>$this->processo,
             'Sistema'=>$this->sistema,
             'Equipamento'=>$this->equipamento,
 
             'DataInicio'=>DB::raw("CONVERT(datetime, '{$newInicio}', 120)"),
-            'DataFim'=>DB::raw("CONVERT(datetime, '{$newFim}', 120)"),
+            'DataFim'=>$newFim?DB::raw("CONVERT(datetime, '{$newFim}', 120)"):null,
 
             'EqpGerador'=>$tagGerador->Equipamento ?? null,
             'TipoCodigo'=>$this->tipCod,
