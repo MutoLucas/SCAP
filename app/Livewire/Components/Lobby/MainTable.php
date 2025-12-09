@@ -146,6 +146,15 @@ class MainTable extends Component
     public function selectToDivide($id)
     {
         $this->selectedToDivide = $this->getParada($id);
+        if(!$this->selectedToDivide->DataFim){
+            $this->messageDivideLine[$this->selectedToDivide->Id] = [
+                'message'=>'Parada nao pode ser dividida pois ainda nao foi fechada',
+                'severity'=>'danger',
+                'icon'=>'bi bi-x-circle'
+            ];
+        }else{
+            $this->messageDivideLine = null;
+        }
     }
 
     public function divideLine($id)

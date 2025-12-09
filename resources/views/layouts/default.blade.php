@@ -9,7 +9,7 @@
 </head>
 <body>
     <x-navbar/>
-    
+
     @yield('content')
 </body>
 </html>
